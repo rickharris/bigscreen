@@ -1,0 +1,3 @@
+@Bigscreen ||= {}
+
+class Bigscreen.Tv
