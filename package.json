@@ -6,6 +6,8 @@
   },
   "devDependencies": {
     "grunt": "~0.3.17",
-    "grunt-contrib-coffee": "~0.3.2"
+    "grunt-contrib-coffee": "~0.3.2",
+    "grunt-compass": "~0.3.7",
+    "grunt-contrib-mincss": "~0.3.2"
   }
 }

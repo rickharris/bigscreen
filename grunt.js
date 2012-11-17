@@ -11,6 +11,24 @@ module.exports = function(grunt) {
         }
       }
     },
+    compass: {
+      dev: {
+        src: 'lib/assets/stylesheets',
+        specify: 'lib/assets/stylesheets/<%= pkg.name %>.css.sass',
+        dest: 'dist',
+        linecomments: false,
+        forcecompile: false,
+        debugsass: false,
+        relativeassets: true
+      }
+    },
+    mincss: {
+      compress: {
+        files: {
+          'dist/<%= pkg.name %>.min.css': 'dist/<%= pkg.name %>.css'
+        }
+      }
+    },
     lint: {
       files: ['grunt.js', 'dist/<%= pkg.name %>.js']
     },
@@ -21,8 +39,14 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      files: 'lib/assets/javascripts/bigscreen/*.coffee',
-      tasks: 'coffee lint min'
+      js: {
+        files: 'lib/assets/javascripts/bigscreen/*.coffee',
+        tasks: 'coffee lint min'
+      },
+      css: {
+        files: 'lib/assets/stylesheets/bigscreen.css.sass',
+        tasks: 'compass:dev mincss'
+      }
     },
     jshint: {
       options: {
@@ -44,5 +68,7 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-coffee');
+  grunt.loadNpmTasks('grunt-compass');
+  grunt.loadNpmTasks('grunt-contrib-mincss');
 
 };
