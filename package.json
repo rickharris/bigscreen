@@ -1,0 +1,11 @@
+{
+  "name": "bigscreen",
+  "version": "0.0.1",
+  "author": {
+    "name": "Rick Harris"
+  },
+  "devDependencies": {
+    "grunt": "~0.3.17",
+    "grunt-contrib-coffee": "~0.3.2"
+  }
+}
