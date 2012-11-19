@@ -1,15 +1,15 @@
 # Bigscreen
 > A big boy Javascript video player that will still fit in your treehouse.
 
-# Development
+## Development
 
-## Do:
+### Do:
 - Edit files in `lib/assets`.
 - Run `script/server` to compile assets and run a local server for opening the
   spec runner in the browser (`localhost:{PORT}/spec/SpecRunner.htlm`).
 - Write specs.
 
-## Don't:
+### Don't:
 - Edit files in `dist`.
 - Write new features without specs.
 - Run specs in PhantomJS. At the time of this writing, the video element is on
