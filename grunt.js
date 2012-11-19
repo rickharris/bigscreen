@@ -85,6 +85,4 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-mincss');
   grunt.loadTasks("./tasks");
 
-  grunt.registerTask('spec', 'coffee mocha');
-
 };
