@@ -6,7 +6,7 @@
 ### Do:
 - Edit files in `lib/assets`.
 - Run `script/server` to compile assets and run a local server for opening the
-  spec runner in the browser (`localhost:{PORT}/spec/SpecRunner.htlm`).
+  spec runner in the browser (`localhost:{PORT}/spec/SpecRunner.html`).
 - Write specs.
 
 ### Don't:
@@ -16,4 +16,4 @@
   their list of "irrelevant" features and we can't really test the video API.
 
 You will need to have NPM & Node installed. All you need to do for setup is to
-run "npm install" and you're good to go.
+run `npm install` and you're good to go.
