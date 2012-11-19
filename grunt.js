@@ -1,3 +1,5 @@
+connect = require('connect');
+
 /*global module:false*/
 module.exports = function(grunt) {
 
@@ -75,19 +77,14 @@ module.exports = function(grunt) {
       },
       globals: {}
     },
-    uglify: {},
-    mocha: {
-      all: {
-        src: ['spec/runner.html'],
-        run: true
-      }
-    }
+    uglify: {}
   });
 
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-compass');
   grunt.loadNpmTasks('grunt-contrib-mincss');
-  grunt.loadNpmTasks('grunt-mocha');
+  grunt.loadTasks("./tasks");
 
   grunt.registerTask('spec', 'coffee mocha');
+
 };
