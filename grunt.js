@@ -1,21 +1,51 @@
-connect = require('connect');
+var path = require("path");
 
-/*global module:false*/
 module.exports = function(grunt) {
 
-  // Project configuration.
   grunt.initConfig({
     pkg: '<json:package.json>',
     coffee: {
-      dist: {
+      src: {
         files: {
-          'dist/<%= pkg.name %>.js': 'lib/assets/javascripts/bigscreen/*.coffee'
+          'compiled/<%= pkg.name %>.js': 'lib/assets/javascripts/bigscreen/**/*.coffee'
+        },
+        options: {
+          bare: true
         }
       },
       spec: {
         files: {
-          'spec/<%= pkg.name %>_spec.js': 'spec/**/*.coffee'
+          'compiled/<%= pkg.name %>_spec.js': 'spec/**/*.coffee'
         }
+      }
+    },
+    jst: {
+      compile: {
+        options: {
+          processName: function(filename) {
+            var dir = path.dirname(filename).replace("lib/assets/javascripts/", "");
+            var basename = path.basename(filename, ".jst.ejs");
+            return path.join(dir, basename);
+          }
+        },
+        files: {
+          'compiled/<%= pkg.name %>_templates.js': 'lib/assets/javascripts/bigscreen/templates/*.jst.ejs'
+        }
+      }
+    },
+    lint: {
+      files: ['grunt.js', 'compiled/<%= pkg.name %>.js']
+    },
+    concat: {
+      dist: {
+        src: ['compiled/<%= pkg.name %>.js', 'compiled/<%= pkg.name %>_templates.js'],
+        dest: 'dist/<%= pkg.name %>.js'
+      }
+    },
+    min: {
+      dist: {
+        src: 'dist/<%= pkg.name %>.js',
+        dest: 'dist/<%= pkg.name %>.min.js'
       }
     },
     compass: {
@@ -36,21 +66,24 @@ module.exports = function(grunt) {
         }
       }
     },
-    lint: {
-      files: ['grunt.js', 'dist/<%= pkg.name %>.js']
-    },
-    min: {
-      dist: {
-        src: 'dist/<%= pkg.name %>.js',
-        dest: 'dist/<%= pkg.name %>.min.js'
-      }
-    },
     watch: {
-      js: {
-        files: 'lib/assets/javascripts/bigscreen/*.coffee',
-        tasks: 'coffee:dist lint min'
+      coffee: {
+        files: 'lib/assets/javascripts/bigscreen/**/*.coffee',
+        tasks: 'coffee:src lint'
       },
-      css: {
+      jst: {
+        files: 'lib/assets/javascripts/bigscreen/templates/*.jst.ejs',
+        tasks: 'jst'
+      },
+      concat: {
+        files: 'compiled/{bigscreen,bigscreen_templates}.js',
+        tasks: 'concat'
+      },
+      min: {
+        files: 'dist/<%= pkg.name %>.js',
+        tasks: 'min'
+      },
+      mincss: {
         files: 'lib/assets/stylesheets/bigscreen.css.sass',
         tasks: 'compass:dev mincss'
       },
@@ -83,6 +116,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-compass');
   grunt.loadNpmTasks('grunt-contrib-mincss');
+  grunt.loadNpmTasks('grunt-contrib-jst');
   grunt.loadTasks("./tasks");
 
 };

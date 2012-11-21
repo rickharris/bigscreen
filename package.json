@@ -9,6 +9,7 @@
     "grunt-contrib-coffee": "~0.3.2",
     "grunt-compass": "~0.3.7",
     "grunt-contrib-mincss": "~0.3.2",
-    "connect": "~2.7.0"
+    "connect": "~2.7.0",
+    "grunt-contrib-jst": "~0.3.1"
   }
 }

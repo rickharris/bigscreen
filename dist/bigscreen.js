@@ -1,49 +1,43 @@
-(function() {
-  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
-  this.Bigscreen || (this.Bigscreen = {});
+this.Bigscreen || (this.Bigscreen = {});
 
-  Bigscreen.PlayToggle = (function() {
+Bigscreen.PlayToggle = (function() {
 
-    function PlayToggle(video) {
-      this.video = video;
-      this.toggle = __bind(this.toggle, this);
+  function PlayToggle(video) {
+    this.video = video;
+    this.toggle = __bind(this.toggle, this);
 
-      this.onPlay = __bind(this.onPlay, this);
+    this.onPlay = __bind(this.onPlay, this);
 
-      this.video.addEventListener('play', this.onPlay);
-      this.el = document.createElement('a');
-      this.el.addEventListener('click', this.toggle);
+    this.video.addEventListener('play', this.onPlay);
+    this.el = document.createElement('a');
+    this.el.addEventListener('click', this.toggle);
+  }
+
+  PlayToggle.prototype.onPlay = function() {};
+
+  PlayToggle.prototype.toggle = function() {
+    if (this.video.paused) {
+      return this.video.play();
+    } else {
+      return this.video.pause();
     }
+  };
 
-    PlayToggle.prototype.onPlay = function() {};
+  return PlayToggle;
 
-    PlayToggle.prototype.toggle = function() {
-      if (this.video.paused) {
-        return this.video.play();
-      } else {
-        return this.video.pause();
-      }
-    };
+})();
 
-    return PlayToggle;
 
-  })();
+this.Bigscreen || (this.Bigscreen = {});
 
-}).call(this);
+Bigscreen.Tv = (function() {
 
-(function() {
+  function Tv(video) {
+    this.playToggle = new Bigscreen.PlayToggle(video);
+  }
 
-  this.Bigscreen || (this.Bigscreen = {});
+  return Tv;
 
-  Bigscreen.Tv = (function() {
-
-    function Tv(video) {
-      this.playToggle = new Bigscreen.PlayToggle(video);
-    }
-
-    return Tv;
-
-  })();
-
-}).call(this);
+})();
