@@ -69,3 +69,27 @@ Bigscreen.Utils.Enumerable = (function() {
   return Enumerable;
 
 })();
+
+
+this.Bigscreen || (this.Bigscreen = {});
+
+Bigscreen.Utils || (Bigscreen.Utils = {});
+
+Bigscreen.Utils.Events = (function() {
+
+  function Events() {}
+
+  Events.delegate = function(eventName, context, selector, callback) {
+    return context.addEventListener(eventName, function(event) {
+      var matches, matchingElements;
+      matchingElements = context.querySelectorAll(selector);
+      matches = Bigscreen.Utils.Enumerable.includes(matchingElements, event.target);
+      if (matches) {
+        return callback.apply(this, event);
+      }
+    });
+  };
+
+  return Events;
+
+})();
