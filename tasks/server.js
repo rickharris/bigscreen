@@ -33,7 +33,7 @@ module.exports = function(grunt) {
       hostname: grunt.config('server.hostname') || 'localhost'
     };
 
-    grunt.task.run('coffee jst lint concat min compass mincss')
+    grunt.task.run('compile')
     grunt.helper('server', opts, cb);
     grunt.task.run('watch');
   });
