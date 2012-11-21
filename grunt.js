@@ -119,4 +119,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jst');
   grunt.loadTasks("./tasks");
 
+  grunt.registerTask('compile', 'coffee jst lint concat min compass mincss');
+
 };
