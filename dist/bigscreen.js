@@ -6,13 +6,14 @@ Bigscreen.PlayToggle = (function() {
 
   function PlayToggle(video) {
     this.video = video;
+    this.render = __bind(this.render, this);
+
     this.toggle = __bind(this.toggle, this);
 
     this.onPlay = __bind(this.onPlay, this);
 
     this.video.addEventListener('play', this.onPlay);
-    this.el = document.createElement('a');
-    this.el.addEventListener('click', this.toggle);
+    Bigscreen.Utils.Events.delegate('click', this.video.parentNode, '.bigscreen-play-toggle', this.toggle);
   }
 
   PlayToggle.prototype.onPlay = function() {};
@@ -25,6 +26,10 @@ Bigscreen.PlayToggle = (function() {
     }
   };
 
+  PlayToggle.prototype.render = function() {
+    return JST['bigscreen/templates/play_toggle']();
+  };
+
   return PlayToggle;
 
 })();
@@ -35,8 +40,21 @@ this.Bigscreen || (this.Bigscreen = {});
 Bigscreen.Tv = (function() {
 
   function Tv(video) {
-    this.playToggle = new Bigscreen.PlayToggle(video);
+    var features;
+    this.video = video;
+    features = {
+      playToggle: new Bigscreen.PlayToggle(video)
+    };
+    this.render(features);
   }
+
+  Tv.prototype.render = function(features) {
+    var featureWrapper;
+    featureWrapper = document.createElement('div');
+    featureWrapper.className = "bigscreen-features";
+    featureWrapper.innerHTML = JST['bigscreen/templates/tv'](features);
+    return this.video.parentNode.appendChild(featureWrapper);
+  };
 
   return Tv;
 
@@ -93,3 +111,23 @@ Bigscreen.Utils.Events = (function() {
   return Events;
 
 })();
+
+this["JST"] = this["JST"] || {};
+
+this["JST"]["bigscreen/templates/play_toggle"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<a class="bigscreen-play-toggle" title="Play or pause the video">Play</a>\n';
+}
+return __p;
+};
+
+this["JST"]["bigscreen/templates/tv"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+=''+
+( playToggle.render() )+
+'\n';
+}
+return __p;
+};

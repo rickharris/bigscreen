@@ -3,8 +3,8 @@
 class Bigscreen.PlayToggle
   constructor: (@video) ->
     @video.addEventListener('play', @onPlay)
-    @el = document.createElement('a')
-    @el.addEventListener('click', @toggle)
+    Bigscreen.Utils.Events.delegate('click',
+      @video.parentNode, '.bigscreen-play-toggle', @toggle)
 
   onPlay: =>
 
@@ -13,3 +13,6 @@ class Bigscreen.PlayToggle
       @video.play()
     else
       @video.pause()
+
+  render: =>
+    JST['bigscreen/templates/play_toggle']()

@@ -8,7 +8,8 @@ describe "Bigscreen.PlayToggle", ->
     spyOn(@prototype, "toggle").andCallThrough()
 
     @video = document.getElementById('video')
-    @playToggle = new Bigscreen.PlayToggle(@video)
+    @tv = new Bigscreen.Tv(@video)
+    @el = @video.parentNode.querySelector('.bigscreen-play-toggle')
 
   describe "#onPlay", ->
     it "is called when the video starts playing", ->
@@ -26,20 +27,21 @@ describe "Bigscreen.PlayToggle", ->
     xit "removes the paused class from its element"
 
   describe "#onPause", ->
+    xit "is called when the video pauses"
     xit "adds the paused class to its element"
     xit "removes the playing class from its element"
 
   describe "#toggle", ->
     it "is called when the toggle element is clicked", ->
-      @playToggle.el.click()
+      @el.click()
       expect(@prototype.toggle).toHaveBeenCalled()
 
     it "plays the video if the video is paused", ->
       expect(@video.paused).toEqual(true)
-      @playToggle.toggle()
+      @el.click()
       expect(@video.paused).toEqual(false)
 
     it "pauses the video if the video is playing", ->
       @video.play()
-      @playToggle.toggle()
+      @el.click()
       expect(@video.paused).toEqual(true)
