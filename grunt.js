@@ -67,17 +67,20 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      coffee: {
-        files: 'lib/assets/javascripts/bigscreen/**/*.coffee',
-        tasks: 'coffee:src lint'
+      js: {
+        files: [
+          'lib/assets/javascripts/bigscreen/**/*.coffee',
+          'lib/assets/javascripts/bigscreen/templates/*.jst.ejs'
+        ],
+        tasks: 'coffee:src jst'
       },
-      jst: {
-        files: 'lib/assets/javascripts/bigscreen/templates/*.jst.ejs',
-        tasks: 'jst'
+      gruntlint: {
+        files: 'grunt.js',
+        tasks: 'lint'
       },
       concat: {
         files: 'compiled/{bigscreen,bigscreen_templates}.js',
-        tasks: 'concat'
+        tasks: 'lint concat'
       },
       min: {
         files: 'dist/<%= pkg.name %>.js',
@@ -110,15 +113,19 @@ module.exports = function(grunt) {
       },
       globals: {}
     },
-    uglify: {}
+    uglify: {},
+    clean: {
+      compiled: 'compiled'
+    }
   });
 
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-compass');
   grunt.loadNpmTasks('grunt-contrib-mincss');
   grunt.loadNpmTasks('grunt-contrib-jst');
   grunt.loadTasks("./tasks");
 
-  grunt.registerTask('compile', 'coffee jst lint concat min compass mincss');
+  grunt.registerTask('compile', 'clean coffee jst lint concat min compass mincss');
 
 };
