@@ -41,3 +41,31 @@ Bigscreen.Tv = (function() {
   return Tv;
 
 })();
+
+
+this.Bigscreen || (this.Bigscreen = {});
+
+Bigscreen.Utils || (Bigscreen.Utils = {});
+
+Bigscreen.Utils.Enumerable = (function() {
+
+  function Enumerable() {}
+
+  Enumerable.includes = function(enumerable, item) {
+    var i, _i, _len;
+    if (enumerable.indexOf) {
+      return enumerable.indexOf(item) >= 0;
+    } else {
+      for (_i = 0, _len = enumerable.length; _i < _len; _i++) {
+        i = enumerable[_i];
+        if (i === item) {
+          return true;
+        }
+      }
+      return false;
+    }
+  };
+
+  return Enumerable;
+
+})();

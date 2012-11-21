@@ -7,7 +7,7 @@ describe "Bigscreen.PlayToggle", ->
     spyOn(@prototype, "onPlay").andCallThrough()
     spyOn(@prototype, "toggle").andCallThrough()
 
-    @video = document.getElementById('test-video')
+    @video = document.getElementById('video')
     @playToggle = new Bigscreen.PlayToggle(@video)
 
   describe "#onPlay", ->
