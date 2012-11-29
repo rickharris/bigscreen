@@ -5,10 +5,12 @@ describe "Bigscreen.PlayToggle", ->
 
     @prototype = Bigscreen.PlayToggle.prototype
     spyOn(@prototype, "onPlay").andCallThrough()
+    spyOn(@prototype, "onPause").andCallThrough()
     spyOn(@prototype, "toggle").andCallThrough()
 
     @video = document.getElementById('video')
     @tv = new Bigscreen.Tv(@video)
+    @playToggle = @tv.features.playToggle
     @el = @video.parentNode.querySelector('.bigscreen-play-toggle')
 
   describe "#onPlay", ->
@@ -23,13 +25,34 @@ describe "Bigscreen.PlayToggle", ->
       , 1 # 1ms is all it takes folks. That makes sense, right? ...Right?!
       runs -> expect(@prototype.onPlay).toHaveBeenCalled()
 
-    xit "adds the playing class to its element"
-    xit "removes the paused class from its element"
+    it "adds the playing class to its element", ->
+      @playToggle.onPlay()
+      expect($(@playToggle.getElement())).toHaveClass('bigscreen-is-playing')
+
+    it "removes the paused class from its element", ->
+      @playToggle.onPause()
+      expect($(@playToggle.getElement())).toHaveClass('bigscreen-is-paused')
+      @playToggle.onPlay()
+      expect($(@playToggle.getElement())).not.toHaveClass('bigscreen-is-paused')
 
   describe "#onPause", ->
-    xit "is called when the video pauses"
-    xit "adds the paused class to its element"
-    xit "removes the playing class from its element"
+    it "is called when the video pauses", ->
+      @video.play()
+      @video.pause()
+      waitsFor ->
+        @prototype.onPause.wasCalled
+      , 1
+      runs -> expect(@prototype.onPause).toHaveBeenCalled()
+
+    it "adds the paused class to its element", ->
+      @playToggle.onPause()
+      expect($(@playToggle.getElement())).toHaveClass('bigscreen-is-paused')
+
+    it "removes the playing class from its element", ->
+      @playToggle.onPlay()
+      expect($(@playToggle.getElement())).toHaveClass('bigscreen-is-playing')
+      @playToggle.onPause()
+      expect($(@playToggle.getElement())).not.toHaveClass('bigscreen-is-playing')
 
   describe "#toggle", ->
     it "is called when the toggle element is clicked", ->

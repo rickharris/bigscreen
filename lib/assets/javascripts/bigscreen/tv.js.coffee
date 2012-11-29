@@ -2,9 +2,9 @@
 
 class Bigscreen.Tv
   constructor: (@video) ->
-    features =
+    @features =
       playToggle: new Bigscreen.PlayToggle(video)
-    @render(features)
+    @render(@features)
 
   render: (features) ->
     featureWrapper = document.createElement('div')

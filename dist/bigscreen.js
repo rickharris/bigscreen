@@ -10,13 +10,24 @@ Bigscreen.PlayToggle = (function() {
 
     this.toggle = __bind(this.toggle, this);
 
+    this.onPause = __bind(this.onPause, this);
+
     this.onPlay = __bind(this.onPlay, this);
 
     this.video.addEventListener('play', this.onPlay);
+    this.video.addEventListener('pause', this.onPause);
     Bigscreen.Utils.Events.delegate('click', this.video.parentNode, '.bigscreen-play-toggle', this.toggle);
   }
 
-  PlayToggle.prototype.onPlay = function() {};
+  PlayToggle.prototype.onPlay = function() {
+    this.getElement().classList.add('bigscreen-is-playing');
+    return this.getElement().classList.remove('bigscreen-is-paused');
+  };
+
+  PlayToggle.prototype.onPause = function() {
+    this.getElement().classList.add('bigscreen-is-paused');
+    return this.getElement().classList.remove('bigscreen-is-playing');
+  };
 
   PlayToggle.prototype.toggle = function() {
     if (this.video.paused) {
@@ -24,6 +35,10 @@ Bigscreen.PlayToggle = (function() {
     } else {
       return this.video.pause();
     }
+  };
+
+  PlayToggle.prototype.getElement = function() {
+    return this.element || (this.element = this.video.parentNode.querySelector('.bigscreen-play-toggle'));
   };
 
   PlayToggle.prototype.render = function() {
@@ -40,12 +55,11 @@ this.Bigscreen || (this.Bigscreen = {});
 Bigscreen.Tv = (function() {
 
   function Tv(video) {
-    var features;
     this.video = video;
-    features = {
+    this.features = {
       playToggle: new Bigscreen.PlayToggle(video)
     };
-    this.render(features);
+    this.render(this.features);
   }
 
   Tv.prototype.render = function(features) {
