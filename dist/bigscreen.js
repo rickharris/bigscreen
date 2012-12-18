@@ -2,6 +2,51 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 
 this.Bigscreen || (this.Bigscreen = {});
 
+Bigscreen.PauseButton = (function() {
+
+  function PauseButton(video) {
+    this.video = video;
+    this.onClick = __bind(this.onClick, this);
+
+    this.wasPlayed = __bind(this.wasPlayed, this);
+
+    this.wasPaused = __bind(this.wasPaused, this);
+
+    this.video.addEventListener('pause', this.wasPaused);
+    this.video.addEventListener('play', this.wasPlayed);
+    Bigscreen.Utils.Events.delegate('click', this.video.parentNode, '.bigscreen-pause-button', this.onClick);
+  }
+
+  PauseButton.prototype.wasPaused = function() {
+    return Bigscreen.Utils.ClassList.add('is-paused', this.getElement());
+  };
+
+  PauseButton.prototype.wasPlayed = function() {
+    return Bigscreen.Utils.ClassList.remove('is-paused', this.getElement());
+  };
+
+  PauseButton.prototype.onClick = function() {
+    if (!this.video.paused) {
+      return this.video.pause();
+    }
+  };
+
+  PauseButton.prototype.render = function() {
+    return JST['bigscreen/templates/pause_button']();
+  };
+
+  PauseButton.prototype.getElement = function() {
+    return this.video.parentNode.querySelector('.bigscreen-pause-button');
+  };
+
+  return PauseButton;
+
+})();
+
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+this.Bigscreen || (this.Bigscreen = {});
+
 Bigscreen.PlayButton = (function() {
 
   function PlayButton(video) {
@@ -102,7 +147,8 @@ Bigscreen.Tv = (function() {
   function Tv(video) {
     this.video = video;
     this.features = {
-      playButton: new Bigscreen.PlayButton(video)
+      playButton: new Bigscreen.PlayButton(video),
+      pauseButton: new Bigscreen.PauseButton(video)
     };
     this.render(this.features);
   }
@@ -223,6 +269,14 @@ Bigscreen.Utils.Events = (function() {
 
 this["JST"] = this["JST"] || {};
 
+this["JST"]["bigscreen/templates/pause_button"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<a class="bigscreen-pause-button is-paused">Pause</a>\n';
+}
+return __p;
+};
+
 this["JST"]["bigscreen/templates/play_button"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
@@ -236,6 +290,8 @@ var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
 __p+=''+
 ( playButton.render() )+
+'\n'+
+( pauseButton.render() )+
 '\n';
 }
 return __p;

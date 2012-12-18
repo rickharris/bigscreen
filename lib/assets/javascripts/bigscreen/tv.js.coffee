@@ -4,6 +4,7 @@ class Bigscreen.Tv
   constructor: (@video) ->
     @features =
       playButton: new Bigscreen.PlayButton(video)
+      pauseButton: new Bigscreen.PauseButton(video)
     @render(@features)
 
   render: (features) ->
