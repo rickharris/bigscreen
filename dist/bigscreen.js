@@ -18,11 +18,11 @@ Bigscreen.PlayButton = (function() {
   }
 
   PlayButton.prototype.wasPlayed = function(event) {
-    return this.getElement().classList.add('is-playing');
+    return Bigscreen.Utils.ClassList.add('is-playing', this.getElement());
   };
 
   PlayButton.prototype.wasPaused = function(event) {
-    return this.getElement().classList.remove('is-playing');
+    return Bigscreen.Utils.ClassList.remove('is-playing', this.getElement());
   };
 
   PlayButton.prototype.onClick = function(event) {
@@ -116,6 +116,56 @@ Bigscreen.Tv = (function() {
   };
 
   return Tv;
+
+})();
+
+
+this.Bigscreen || (this.Bigscreen = {});
+
+Bigscreen.Utils || (Bigscreen.Utils = {});
+
+Bigscreen.Utils.ClassList = (function() {
+
+  function ClassList() {}
+
+  ClassList.supportsClassList = document.documentElement.classList != null;
+
+  ClassList.parseClassList = function(element) {
+    if (element.className === "") {
+      return [];
+    } else {
+      return element.className.replace(/^\s+|\s+$/g, "").split(/\s+/);
+    }
+  };
+
+  ClassList.add = function(value, element) {
+    var classList;
+    if (this.supportsClassList) {
+      return element.classList.add(value);
+    } else {
+      classList = this.parseClassList(element);
+      if (classList.indexOf(value) === -1) {
+        classList.push(value);
+      }
+      return element.className = classList.join(' ');
+    }
+  };
+
+  ClassList.remove = function(value, element) {
+    var classList, index;
+    if (this.supportsClassList) {
+      return element.classList.remove(value);
+    } else {
+      classList = this.parseClassList(element);
+      index = classList.indexOf(value);
+      if (index !== -1) {
+        classList.splice(index, 1);
+        return element.className = classList.join(' ');
+      }
+    }
+  };
+
+  return ClassList;
 
 })();
 
