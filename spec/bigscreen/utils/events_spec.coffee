@@ -30,6 +30,13 @@ describe "Bigscreen.Utils.Events", ->
       @root.click()
       expect(@callback).not.toHaveBeenCalled()
 
+    it "passes the event object as the first argument to the callback", ->
+      event = undefined
+      Bigscreen.Utils.Events.delegate 'click', @root, '#target', (e) =>
+        event = e
+      @target.click()
+      expect(event).toBeDefined()
+
     it "queries the DOM only in the scope of the root element", ->
       # The fixture in this example has the following structure:
       #

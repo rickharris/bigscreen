@@ -258,7 +258,7 @@ Bigscreen.Utils.Events = (function() {
       matchingElements = context.querySelectorAll(selector);
       matches = Bigscreen.Utils.Enumerable.includes(matchingElements, event.target);
       if (matches) {
-        return callback.apply(this, event);
+        return callback.apply(this, arguments);
       }
     });
   };

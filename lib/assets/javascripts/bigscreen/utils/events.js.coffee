@@ -6,4 +6,4 @@ class Bigscreen.Utils.Events
     context.addEventListener eventName, (event) ->
       matchingElements = context.querySelectorAll(selector)
       matches = Bigscreen.Utils.Enumerable.includes(matchingElements, event.target)
-      callback.apply(this, event) if matches
+      callback.apply(this, arguments) if matches
