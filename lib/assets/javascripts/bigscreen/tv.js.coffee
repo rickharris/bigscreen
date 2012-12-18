@@ -3,7 +3,7 @@
 class Bigscreen.Tv
   constructor: (@video) ->
     @features =
-      playToggle: new Bigscreen.PlayToggle(video)
+      playButton: new Bigscreen.PlayButton(video)
     @render(@features)
 
   render: (features) ->

@@ -2,6 +2,51 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 
 this.Bigscreen || (this.Bigscreen = {});
 
+Bigscreen.PlayButton = (function() {
+
+  function PlayButton(video) {
+    this.video = video;
+    this.onClick = __bind(this.onClick, this);
+
+    this.wasPaused = __bind(this.wasPaused, this);
+
+    this.wasPlayed = __bind(this.wasPlayed, this);
+
+    this.video.addEventListener('play', this.wasPlayed);
+    this.video.addEventListener('pause', this.wasPaused);
+    Bigscreen.Utils.Events.delegate('click', this.video.parentNode, '.bigscreen-play-button', this.onClick);
+  }
+
+  PlayButton.prototype.wasPlayed = function(event) {
+    return this.getElement().classList.add('is-playing');
+  };
+
+  PlayButton.prototype.wasPaused = function(event) {
+    return this.getElement().classList.remove('is-playing');
+  };
+
+  PlayButton.prototype.onClick = function(event) {
+    if (this.video.paused) {
+      return this.video.play();
+    }
+  };
+
+  PlayButton.prototype.getElement = function() {
+    return this.video.parentNode.querySelector('.bigscreen-play-button');
+  };
+
+  PlayButton.prototype.render = function() {
+    return JST['bigscreen/templates/play_button']();
+  };
+
+  return PlayButton;
+
+})();
+
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+this.Bigscreen || (this.Bigscreen = {});
+
 Bigscreen.PlayToggle = (function() {
 
   function PlayToggle(video) {
@@ -57,7 +102,7 @@ Bigscreen.Tv = (function() {
   function Tv(video) {
     this.video = video;
     this.features = {
-      playToggle: new Bigscreen.PlayToggle(video)
+      playButton: new Bigscreen.PlayButton(video)
     };
     this.render(this.features);
   }
@@ -128,10 +173,10 @@ Bigscreen.Utils.Events = (function() {
 
 this["JST"] = this["JST"] || {};
 
-this["JST"]["bigscreen/templates/play_toggle"] = function(obj){
+this["JST"]["bigscreen/templates/play_button"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<a class="bigscreen-play-toggle" title="Play or pause the video">Play</a>\n';
+__p+='<a class="bigscreen-play-button">Play</a>\n';
 }
 return __p;
 };
@@ -140,7 +185,7 @@ this["JST"]["bigscreen/templates/tv"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
 __p+=''+
-( playToggle.render() )+
+( playButton.render() )+
 '\n';
 }
 return __p;
