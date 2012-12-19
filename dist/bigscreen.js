@@ -191,7 +191,7 @@ Bigscreen.Tv = (function() {
     this.features = {
       playButton: new Bigscreen.PlayButton(video),
       pauseButton: new Bigscreen.PauseButton(video),
-      playbackRateControl: new Bigscreen.PlaybackRateControl(video)
+      playbackRateControl: (Bigscreen.Utils.FeatureDetects.playbackRate ? new Bigscreen.PlaybackRateControl(video) : null)
     };
     this.render(this.features);
   }
@@ -310,6 +310,21 @@ Bigscreen.Utils.Events = (function() {
 
 })();
 
+
+this.Bigscreen || (this.Bigscreen = {});
+
+Bigscreen.Utils || (Bigscreen.Utils = {});
+
+Bigscreen.Utils.FeatureDetects = (function() {
+
+  function FeatureDetects() {}
+
+  FeatureDetects.playbackRate = document.createElement('video').playbackRate != null;
+
+  return FeatureDetects;
+
+})();
+
 this["JST"] = this["JST"] || {};
 
 this["JST"]["bigscreen/templates/pause_button"] = function(obj){
@@ -343,9 +358,13 @@ __p+=''+
 ( playButton.render() )+
 '\n'+
 ( pauseButton.render() )+
-'\n'+
+'\n';
+ if(playbackRateControl) { 
+;__p+='\n  '+
 ( playbackRateControl.render() )+
 '\n';
+ } 
+;__p+='\n';
 }
 return __p;
 };
