@@ -5,6 +5,7 @@ class Bigscreen.Tv
     @features =
       playButton: new Bigscreen.PlayButton(video)
       pauseButton: new Bigscreen.PauseButton(video)
+      playbackRateControl: new Bigscreen.PlaybackRateControl(video)
     @render(@features)
 
   render: (features) ->

@@ -139,6 +139,48 @@ Bigscreen.PlayToggle = (function() {
 
 })();
 
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+this.Bigscreen || (this.Bigscreen = {});
+
+Bigscreen.PlaybackRateControl = (function() {
+
+  function PlaybackRateControl(video) {
+    this.video = video;
+    this.onOptionChange = __bind(this.onOptionChange, this);
+
+    this.rateWasChanged = __bind(this.rateWasChanged, this);
+
+    this.video.addEventListener('ratechange', this.rateWasChanged);
+    Bigscreen.Utils.Events.delegate('change', this.video.parentNode, '.bigscreen-playback-rate-control input', this.onOptionChange);
+  }
+
+  PlaybackRateControl.prototype.rateWasChanged = function() {
+    var current;
+    current = this.getElement().querySelector("li[data-playback-rate='" + this.video.playbackRate + "']");
+    if (current) {
+      return current.querySelector('input[type=radio]').checked = true;
+    } else {
+      return this.getElement().querySelector('input[type=radio][checked]').checked = false;
+    }
+  };
+
+  PlaybackRateControl.prototype.onOptionChange = function(event) {
+    return this.video.playbackRate = event.target.value;
+  };
+
+  PlaybackRateControl.prototype.getElement = function() {
+    return this.video.parentNode.querySelector('.bigscreen-playback-rate-control');
+  };
+
+  PlaybackRateControl.prototype.render = function() {
+    return JST['bigscreen/templates/playback_rate_control']();
+  };
+
+  return PlaybackRateControl;
+
+})();
+
 
 this.Bigscreen || (this.Bigscreen = {});
 
@@ -148,7 +190,8 @@ Bigscreen.Tv = (function() {
     this.video = video;
     this.features = {
       playButton: new Bigscreen.PlayButton(video),
-      pauseButton: new Bigscreen.PauseButton(video)
+      pauseButton: new Bigscreen.PauseButton(video),
+      playbackRateControl: new Bigscreen.PlaybackRateControl(video)
     };
     this.render(this.features);
   }
@@ -285,6 +328,14 @@ __p+='<a class="bigscreen-play-button">Play</a>\n';
 return __p;
 };
 
+this["JST"]["bigscreen/templates/playback_rate_control"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<div class="bigscreen-playback-rate-control">\n  <div class="bigscreen-control-headline">\n    Video speed\n  </div>\n  <ul>\n    <li data-playback-rate="1">\n      <label for="bigscreen-playback-rate-normal">\n        <input type="radio"\n          name="bigscreen-playback-rate"\n          id="bigscreen-playback-rate-normal"\n          value="1"\n          checked>\n        <span class="bigscreen-label-value">Normal</span>\n      </label>\n    </li>\n    <li data-playback-rate="1.5">\n      <label for="bigscreen-playback-rate-1-5x">\n        <input type="radio"\n          name="bigscreen-playback-rate"\n          id="bigscreen-playback-rate-1-5x"\n          value="1.5">\n        <span class="bigscreen-label-value">1.5x</span>\n      </label>\n    </li>\n    <li data-playback-rate="2">\n      <label for="bigscreen-playback-rate-2-0x">\n        <input type="radio"\n          name="bigscreen-playback-rate"\n          id="bigscreen-playback-rate-2-0x"\n          value="2">\n        <span class="bigscreen-label-value">2.0x</span>\n      </label>\n    </li>\n  </ul>\n</div>\n';
+}
+return __p;
+};
+
 this["JST"]["bigscreen/templates/tv"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
@@ -292,6 +343,8 @@ __p+=''+
 ( playButton.render() )+
 '\n'+
 ( pauseButton.render() )+
+'\n'+
+( playbackRateControl.render() )+
 '\n';
 }
 return __p;
