@@ -1,3 +1,42 @@
+
+this.Bigscreen || (this.Bigscreen = {});
+
+Bigscreen.CaptionControl = (function() {
+
+  function CaptionControl(video) {
+    this.video = video;
+  }
+
+  CaptionControl.prototype.captionsData = function() {
+    var track, tracks, _i, _len, _results;
+    tracks = this.video.parentNode.querySelectorAll('track[kind=subtitles]');
+    _results = [];
+    for (_i = 0, _len = tracks.length; _i < _len; _i++) {
+      track = tracks[_i];
+      _results.push(this.trackData(track));
+    }
+    return _results;
+  };
+
+  CaptionControl.prototype.trackData = function(track) {
+    return {
+      language: track.srclang,
+      title: track.title || track.srclang
+    };
+  };
+
+  CaptionControl.prototype.render = function() {
+    var captionsData;
+    captionsData = this.captionsData();
+    return JST['bigscreen/templates/caption_control']({
+      captionsData: captionsData
+    });
+  };
+
+  return CaptionControl;
+
+})();
+
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 this.Bigscreen || (this.Bigscreen = {});
@@ -191,7 +230,8 @@ Bigscreen.Tv = (function() {
     this.features = {
       playButton: new Bigscreen.PlayButton(video),
       pauseButton: new Bigscreen.PauseButton(video),
-      playbackRateControl: (Bigscreen.Utils.FeatureDetects.playbackRate ? new Bigscreen.PlaybackRateControl(video) : null)
+      playbackRateControl: (Bigscreen.Utils.FeatureDetects.playbackRate ? new Bigscreen.PlaybackRateControl(video) : null),
+      captionControl: new Bigscreen.CaptionControl(video)
     };
     this.render(this.features);
   }
@@ -327,6 +367,32 @@ Bigscreen.Utils.FeatureDetects = (function() {
 
 this["JST"] = this["JST"] || {};
 
+this["JST"]["bigscreen/templates/caption_control"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='';
+ if (captionsData.length) { 
+;__p+='\n  <div class="bigscreen-caption-control">\n    <div class="bigscreen-control-headline">\n      Caption Language\n    </div>\n    <ul>\n      <li data-caption-language="none">\n        <input type="radio"\n          name="bigscreen-caption-language"\n          id="bigscreen-caption-language-none"\n          value="none"\n          checked>\n        <span class="bigscreen-label-value">None</span>\n      </li>\n\n      ';
+ for (var i in captionsData) { 
+;__p+='\n        ';
+ var track = captionsData[i] 
+;__p+='\n        <li data-caption-language="'+
+( track.language )+
+'">\n          <input type="radio"\n            name="bigscreen-caption-language"\n            id="bigscreen-caption-language-'+
+( track.language )+
+'"\n            value="'+
+( track.language )+
+'">\n          <span class="bigscreen-label-value">'+
+( track.title )+
+'</span>\n        </li>\n      ';
+ } 
+;__p+='\n    </ul>\n  </div>\n';
+ } 
+;__p+='\n';
+}
+return __p;
+};
+
 this["JST"]["bigscreen/templates/pause_button"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
@@ -364,7 +430,9 @@ __p+=''+
 ( playbackRateControl.render() )+
 '\n';
  } 
-;__p+='\n';
+;__p+='\n'+
+( captionControl.render() )+
+'\n';
 }
 return __p;
 };
