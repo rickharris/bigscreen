@@ -7,6 +7,7 @@ class Bigscreen.Tv
       pauseButton: new Bigscreen.PauseButton(video)
       playbackRateControl: (if Bigscreen.Utils.FeatureDetects.playbackRate then new Bigscreen.PlaybackRateControl(video) else null)
       captionControl: new Bigscreen.CaptionControl(video)
+      captionLayer: new Bigscreen.CaptionLayer(video)
     @render(@features)
 
   render: (features) ->

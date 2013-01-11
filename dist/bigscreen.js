@@ -41,6 +41,137 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 
 this.Bigscreen || (this.Bigscreen = {});
 
+Bigscreen.CaptionLayer = (function() {
+
+  function CaptionLayer(video) {
+    this.video = video;
+    this.onTimeUpdate = __bind(this.onTimeUpdate, this);
+
+    this.onLanguageChange = __bind(this.onLanguageChange, this);
+
+    Bigscreen.Utils.Events.delegate('change', this.video.parentNode, '.bigscreen-caption-control input', this.onLanguageChange);
+    this.processedLanguages = {
+      error: "The selected language isn't available.",
+      none: " "
+    };
+  }
+
+  CaptionLayer.prototype.onLanguageChange = function(event) {
+    var captionTrack, language;
+    language = event.target.value;
+    if (this.processedLanguages[language]) {
+      return this.setActiveLanguage(language);
+    } else {
+      captionTrack = this.video.querySelector("track[kind=subtitles][srclang=" + language + "]");
+      return this.processCaptionTrack(captionTrack);
+    }
+  };
+
+  CaptionLayer.prototype.processCaptionTrack = function(captionTrack) {
+    var _this = this;
+    this.request = new XMLHttpRequest();
+    this.request.open("GET", captionTrack.src);
+    this.request.onreadystatechange = function() {
+      if (_this.request.readyState === 4) {
+        if (_this.request.status === 200) {
+          _this.parseCaptions(captionTrack.srclang, _this.request.response);
+          return _this.setActiveLanguage(captionTrack.srclang);
+        } else {
+          return _this.setActiveLanguage('error');
+        }
+      }
+    };
+    return this.request.send();
+  };
+
+  CaptionLayer.prototype.parseCaptions = function(language, captions) {
+    var entries, entry, i, lineNumberPattern, lines;
+    lineNumberPattern = /^[0-9]+$/;
+    lines = captions.split(/\r?\n/);
+    entries = [];
+    i = 0;
+    while (i < lines.length) {
+      if (lines[i].match(lineNumberPattern)) {
+        entry = {};
+        entry.times = this.parseTimeCode(lines[i + 1]);
+        entry.text = lines[i + 2];
+        entries.push(entry);
+      }
+      i++;
+    }
+    return this.processedLanguages[language] = entries;
+  };
+
+  CaptionLayer.prototype.parseTimeCode = function(timeCode) {
+    var end, endSeconds, parts, start, startSeconds, timeCodePattern;
+    timeCodePattern = /^([0-9]{2}):([0-9]{2}):([0-9]{2}),([0-9]{1,3}) --\> ([0-9]{2}):([0-9]{2}):([0-9]{2}),([0-9]{1,3})$/;
+    parts = timeCodePattern.exec(timeCode);
+    start = {
+      hours: parseInt(parts[1], 10),
+      minutes: parseInt(parts[2], 10),
+      seconds: parseInt(parts[3], 10),
+      miliseconds: parseInt(parts[4], 10)
+    };
+    end = {
+      hours: parseInt(parts[5], 10),
+      minutes: parseInt(parts[6], 10),
+      seconds: parseInt(parts[7], 10),
+      miliseconds: parseInt(parts[8], 10)
+    };
+    startSeconds = (start.hours * 60 * 60) + (start.minutes * 60) + start.seconds + (start.miliseconds / 1000);
+    endSeconds = (end.hours * 60 * 60) + (end.minutes * 60) + end.seconds + (end.miliseconds / 1000);
+    return [startSeconds, endSeconds];
+  };
+
+  CaptionLayer.prototype.setActiveLanguage = function(language) {
+    this.currentLanguage = this.processedLanguages[language];
+    if (typeof this.currentLanguage === "string") {
+      this.video.removeEventListener('timeupdate', this.onTimeUpdate);
+      return this.showCaptionMessage(this.currentLanguage);
+    } else {
+      this.video.removeEventListener('timeupdate', this.onTimeUpdate);
+      return this.video.addEventListener('timeupdate', this.onTimeUpdate);
+    }
+  };
+
+  CaptionLayer.prototype.showCaptionMessage = function(text) {
+    var captionContainer;
+    captionContainer = this.getElement().querySelector('.bigscreen-caption-content');
+    return captionContainer.textContent = text;
+  };
+
+  CaptionLayer.prototype.onTimeUpdate = function(event) {
+    var cue, currentTime, _i, _len, _ref, _results;
+    currentTime = this.video.currentTime;
+    _ref = this.currentLanguage;
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      cue = _ref[_i];
+      if (currentTime >= cue.times[0] && currentTime < cue.times[1]) {
+        _results.push(this.showCaptionMessage(cue.text));
+      } else {
+        _results.push(void 0);
+      }
+    }
+    return _results;
+  };
+
+  CaptionLayer.prototype.getElement = function() {
+    return this.video.parentNode.querySelector('.bigscreen-caption-layer');
+  };
+
+  CaptionLayer.prototype.render = function() {
+    return JST['bigscreen/templates/caption_layer']();
+  };
+
+  return CaptionLayer;
+
+})();
+
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+this.Bigscreen || (this.Bigscreen = {});
+
 Bigscreen.PauseButton = (function() {
 
   function PauseButton(video) {
@@ -231,7 +362,8 @@ Bigscreen.Tv = (function() {
       playButton: new Bigscreen.PlayButton(video),
       pauseButton: new Bigscreen.PauseButton(video),
       playbackRateControl: (Bigscreen.Utils.FeatureDetects.playbackRate ? new Bigscreen.PlaybackRateControl(video) : null),
-      captionControl: new Bigscreen.CaptionControl(video)
+      captionControl: new Bigscreen.CaptionControl(video),
+      captionLayer: new Bigscreen.CaptionLayer(video)
     };
     this.render(this.features);
   }
@@ -393,6 +525,14 @@ __p+='';
 return __p;
 };
 
+this["JST"]["bigscreen/templates/caption_layer"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<div class="bigscreen-caption-layer">\n  <div class="bigscreen-caption-content">\n  </div>\n</div>\n';
+}
+return __p;
+};
+
 this["JST"]["bigscreen/templates/pause_button"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
@@ -421,6 +561,8 @@ this["JST"]["bigscreen/templates/tv"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
 __p+=''+
+( captionLayer.render() )+
+'\n'+
 ( playButton.render() )+
 '\n'+
 ( pauseButton.render() )+
