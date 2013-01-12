@@ -9,8 +9,8 @@ class Bigscreen.CaptionControl
 
   trackData: (track) ->
     {
-      language: track.srclang
-      title: track.title || track.srclang
+      language: track.getAttribute('srclang')
+      title: track.title || track.getAttribute('srclang')
     }
 
   render: ->

@@ -20,12 +20,12 @@ class Bigscreen.CaptionLayer
 
   processCaptionTrack: (captionTrack) ->
     @request = new XMLHttpRequest()
-    @request.open("GET", captionTrack.src)
+    @request.open("GET", captionTrack.getAttribute('src'))
     @request.onreadystatechange = =>
       if @request.readyState == 4
         if @request.status == 200
-          @parseCaptions(captionTrack.srclang, @request.response)
-          @setActiveLanguage(captionTrack.srclang)
+          @parseCaptions(captionTrack.getAttribute('srclang'), @request.responseText)
+          @setActiveLanguage(captionTrack.getAttribute('srclang'))
         else
           @setActiveLanguage('error')
     @request.send()

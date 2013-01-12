@@ -20,8 +20,8 @@ Bigscreen.CaptionControl = (function() {
 
   CaptionControl.prototype.trackData = function(track) {
     return {
-      language: track.srclang,
-      title: track.title || track.srclang
+      language: track.getAttribute('srclang'),
+      title: track.title || track.getAttribute('srclang')
     };
   };
 
@@ -70,12 +70,12 @@ Bigscreen.CaptionLayer = (function() {
   CaptionLayer.prototype.processCaptionTrack = function(captionTrack) {
     var _this = this;
     this.request = new XMLHttpRequest();
-    this.request.open("GET", captionTrack.src);
+    this.request.open("GET", captionTrack.getAttribute('src'));
     this.request.onreadystatechange = function() {
       if (_this.request.readyState === 4) {
         if (_this.request.status === 200) {
-          _this.parseCaptions(captionTrack.srclang, _this.request.response);
-          return _this.setActiveLanguage(captionTrack.srclang);
+          _this.parseCaptions(captionTrack.getAttribute('srclang'), _this.request.responseText);
+          return _this.setActiveLanguage(captionTrack.getAttribute('srclang'));
         } else {
           return _this.setActiveLanguage('error');
         }
