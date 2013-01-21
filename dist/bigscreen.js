@@ -371,9 +371,9 @@ Bigscreen.ProgressControl = (function() {
 
     this.video.addEventListener('timeupdate', this.onTimeUpdate);
     this.video.addEventListener('load', this.setDuration);
-    Bigscreen.Utils.Events.delegate('click', this.video.parentNode, '.bigscreen-progress-bar, .bigscreen-progress', this.onClick);
-    Bigscreen.Utils.Events.delegate('mouseover', this.video.parentNode, '.bigscreen-progress-bar, .bigscreen-progress', this.onMouseOver);
-    Bigscreen.Utils.Events.delegate('mouseout', this.video.parentNode, '.bigscreen-progress-bar, .bigscreen-progress', this.onMouseOut);
+    Bigscreen.Utils.Events.delegate('click', this.video.parentNode, '.bigscreen-progress-bar', this.onClick);
+    Bigscreen.Utils.Events.delegate('mouseover', this.video.parentNode, '.bigscreen-progress-bar', this.onMouseOver);
+    Bigscreen.Utils.Events.delegate('mouseout', this.video.parentNode, '.bigscreen-progress-bar', this.onMouseOut);
     this.durationSet = false;
   }
 
@@ -590,12 +590,18 @@ Bigscreen.Utils.Events = (function() {
 
   Events.delegate = function(eventName, context, selector, callback) {
     return context.addEventListener(eventName, function(event) {
-      var matches, matchingElements;
+      var current, matches, matchingElements, _results;
       matchingElements = context.querySelectorAll(selector);
-      matches = Bigscreen.Utils.Enumerable.includes(matchingElements, event.target);
-      if (matches) {
-        return callback.apply(this, arguments);
+      current = event.target;
+      _results = [];
+      while (current !== context) {
+        matches = Bigscreen.Utils.Enumerable.includes(matchingElements, current);
+        if (matches) {
+          callback.apply(this, arguments);
+        }
+        _results.push(current = current.parentNode);
       }
+      return _results;
     });
   };
 

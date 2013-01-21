@@ -5,11 +5,11 @@ class Bigscreen.ProgressControl
     @video.addEventListener 'timeupdate', @onTimeUpdate
     @video.addEventListener 'load', @setDuration
     Bigscreen.Utils.Events.delegate('click', @video.parentNode,
-      '.bigscreen-progress-bar, .bigscreen-progress', @onClick)
+      '.bigscreen-progress-bar', @onClick)
     Bigscreen.Utils.Events.delegate('mouseover', @video.parentNode,
-      '.bigscreen-progress-bar, .bigscreen-progress', @onMouseOver)
+      '.bigscreen-progress-bar', @onMouseOver)
     Bigscreen.Utils.Events.delegate('mouseout', @video.parentNode,
-      '.bigscreen-progress-bar, .bigscreen-progress', @onMouseOut)
+      '.bigscreen-progress-bar', @onMouseOut)
 
     @durationSet = false
 

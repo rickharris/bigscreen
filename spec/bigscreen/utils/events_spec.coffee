@@ -51,3 +51,7 @@ describe "Bigscreen.Utils.Events", ->
       @target.click()
       expect(@callback).toHaveBeenCalled()
 
+    it "bubbles the event", ->
+      Bigscreen.Utils.Events.delegate 'click', @root, 'a', @callback
+      document.getElementById('target-2').click()
+      expect(@callback).toHaveBeenCalled()
