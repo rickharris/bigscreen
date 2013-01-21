@@ -351,6 +351,126 @@ Bigscreen.PlaybackRateControl = (function() {
 
 })();
 
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+this.Bigscreen || (this.Bigscreen = {});
+
+Bigscreen.ProgressControl = (function() {
+
+  function ProgressControl(video) {
+    this.video = video;
+    this.onMouseMove = __bind(this.onMouseMove, this);
+
+    this.onMouseOut = __bind(this.onMouseOut, this);
+
+    this.onMouseOver = __bind(this.onMouseOver, this);
+
+    this.onClick = __bind(this.onClick, this);
+
+    this.onTimeUpdate = __bind(this.onTimeUpdate, this);
+
+    this.video.addEventListener('timeupdate', this.onTimeUpdate);
+    this.video.addEventListener('load', this.setDuration);
+    Bigscreen.Utils.Events.delegate('click', this.video.parentNode, '.bigscreen-progress-bar, .bigscreen-progress', this.onClick);
+    Bigscreen.Utils.Events.delegate('mouseover', this.video.parentNode, '.bigscreen-progress-bar, .bigscreen-progress', this.onMouseOver);
+    Bigscreen.Utils.Events.delegate('mouseout', this.video.parentNode, '.bigscreen-progress-bar, .bigscreen-progress', this.onMouseOut);
+    this.durationSet = false;
+  }
+
+  ProgressControl.prototype.onTimeUpdate = function() {
+    if (!this.durationSet) {
+      this.setDuration();
+    }
+    this.updateCurrentTime();
+    return this.updateProgressBar();
+  };
+
+  ProgressControl.prototype.setDuration = function() {
+    var durationLabel;
+    durationLabel = this.getElement('.bigscreen-duration-label');
+    durationLabel.textContent = this.secondsToTimeLabel(this.video.duration);
+    return this.durationSet = true;
+  };
+
+  ProgressControl.prototype.updateCurrentTime = function() {
+    var currentTimeLabel;
+    currentTimeLabel = this.getElement('.bigscreen-current-time-label');
+    return currentTimeLabel.textContent = this.secondsToTimeLabel(this.video.currentTime);
+  };
+
+  ProgressControl.prototype.updateProgressBar = function() {
+    var percentComplete;
+    percentComplete = this.video.currentTime / this.video.duration * 100;
+    return this.getElement('.bigscreen-progress').setAttribute('style', "width: " + percentComplete + "%");
+  };
+
+  ProgressControl.prototype.onClick = function(event) {
+    var el, progressPercentage;
+    el = this.getElement('.bigscreen-progress-bar');
+    progressPercentage = this.relativeXOffset(event.pageX, el) / el.clientWidth;
+    return this.video.currentTime = this.video.duration * progressPercentage;
+  };
+
+  ProgressControl.prototype.onMouseOver = function(event) {
+    this.getElement('.bigscreen-progress-bar').addEventListener('mousemove', this.onMouseMove);
+    return this.getElement('.bigscreen-progress-tooltip').setAttribute('style', 'display: block');
+  };
+
+  ProgressControl.prototype.onMouseOut = function(event) {
+    this.getElement('.bigscreen-progress-bar').removeEventListener('mousemove', this.onMouseMove);
+    return this.getElement('.bigscreen-progress-tooltip').setAttribute('style', 'display: none');
+  };
+
+  ProgressControl.prototype.onMouseMove = function(event) {
+    var progressBar, progressPercentage, tooltip;
+    progressBar = this.getElement('.bigscreen-progress-bar');
+    progressPercentage = this.relativeXOffset(event.pageX, progressBar) / progressBar.clientWidth;
+    tooltip = this.getElement('.bigscreen-progress-tooltip');
+    tooltip.textContent = this.secondsToTimeLabel(this.video.duration * progressPercentage);
+    return tooltip.setAttribute('style', "left: " + (progressPercentage * 100) + "%");
+  };
+
+  ProgressControl.prototype.getElement = function(extraSelector) {
+    var selector;
+    selector = ".bigscreen-progress-control";
+    if (extraSelector != null) {
+      selector = selector += " " + extraSelector;
+    }
+    return this.video.parentNode.querySelector(selector);
+  };
+
+  ProgressControl.prototype.render = function() {
+    return JST['bigscreen/templates/progress_control']();
+  };
+
+  ProgressControl.prototype.secondsToTimeLabel = function(seconds) {
+    var hours, minutes, result;
+    hours = Math.floor(seconds / (60 * 60));
+    minutes = Math.floor(seconds / 60) % 60;
+    seconds = Math.floor(seconds) % 60;
+    result = "";
+    if (hours > 0) {
+      result += "" + (this.formatTimeSegment(hours)) + ":";
+    }
+    return result += "" + (this.formatTimeSegment(minutes)) + ":" + (this.formatTimeSegment(seconds));
+  };
+
+  ProgressControl.prototype.formatTimeSegment = function(segment) {
+    var format;
+    format = "00";
+    return (format + segment).slice(-format.length);
+  };
+
+  ProgressControl.prototype.relativeXOffset = function(absOffset, element) {
+    var elOffset;
+    elOffset = element.getBoundingClientRect().left + window.pageXOffset - document.documentElement.clientLeft;
+    return absOffset - elOffset;
+  };
+
+  return ProgressControl;
+
+})();
+
 
 this.Bigscreen || (this.Bigscreen = {});
 
@@ -363,7 +483,8 @@ Bigscreen.Tv = (function() {
       pauseButton: new Bigscreen.PauseButton(video),
       playbackRateControl: (Bigscreen.Utils.FeatureDetects.playbackRate ? new Bigscreen.PlaybackRateControl(video) : null),
       captionControl: new Bigscreen.CaptionControl(video),
-      captionLayer: new Bigscreen.CaptionLayer(video)
+      captionLayer: new Bigscreen.CaptionLayer(video),
+      progressControl: new Bigscreen.ProgressControl(video)
     };
     this.render(this.features);
   }
@@ -557,6 +678,14 @@ __p+='<div class="bigscreen-playback-rate-control">\n  <div class="bigscreen-con
 return __p;
 };
 
+this["JST"]["bigscreen/templates/progress_control"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<div class="bigscreen-progress-control">\n  <div class="bigscreen-time-label bigscreen-current-time-label">0:00</div>\n  <div class="bigscreen-progress-bar">\n    <div class="bigscreen-progress"></div>\n    <div class="bigscreen-progress-tooltip" style="display: none">0:00</div>\n  </div>\n  <div class="bigscreen-time-label bigscreen-duration-label">0:00</div>\n</div>\n';
+}
+return __p;
+};
+
 this["JST"]["bigscreen/templates/tv"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
@@ -566,6 +695,8 @@ __p+=''+
 ( playButton.render() )+
 '\n'+
 ( pauseButton.render() )+
+'\n'+
+( progressControl.render() )+
 '\n';
  if(playbackRateControl) { 
 ;__p+='\n  '+

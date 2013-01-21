@@ -8,6 +8,7 @@ class Bigscreen.Tv
       playbackRateControl: (if Bigscreen.Utils.FeatureDetects.playbackRate then new Bigscreen.PlaybackRateControl(video) else null)
       captionControl: new Bigscreen.CaptionControl(video)
       captionLayer: new Bigscreen.CaptionLayer(video)
+      progressControl: new Bigscreen.ProgressControl(video)
     @render(@features)
 
   render: (features) ->

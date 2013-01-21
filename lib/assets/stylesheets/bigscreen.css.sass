@@ -1,1 +1,30 @@
 @import compass
+
+.bigscreen-progress-bar
+  background: #999
+  position: relative
+
+.bigscreen-progress
+  height: 20px
+  background: black
+  +transition-property(width)
+  +transition-duration(0.25s)
+  +transition-timing-function(linear)
+
+.bigscreen-progress-tooltip
+  position: absolute
+  top: -100%
+  margin-top: -9px
+  background: rgba(#444, 0.9)
+  color: #eee
+  padding: 3px
+  &:after
+    content: " "
+    position: absolute
+    top: 100%
+    left: 0
+    height: 0
+    width: 0
+    border-style: solid
+    border-width: 3px
+    border-color: rgba(#444, 0.9) transparent transparent rgba(#444, 0.9)
