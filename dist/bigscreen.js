@@ -172,6 +172,50 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 
 this.Bigscreen || (this.Bigscreen = {});
 
+Bigscreen.FullscreenControl = (function() {
+
+  function FullscreenControl(video) {
+    this.video = video;
+    this.onClick = __bind(this.onClick, this);
+
+    this.isFullscreen = false;
+    Bigscreen.Utils.Events.delegate('click', this.video.parentNode, '.bigscreen-fullscreen-control', this.onClick);
+  }
+
+  FullscreenControl.prototype.onClick = function() {
+    if (this.isFullscreen === true) {
+      return this.exitFullscreen();
+    } else {
+      return this.enterFullscreen();
+    }
+  };
+
+  FullscreenControl.prototype.enterFullscreen = function() {
+    Bigscreen.Utils.ClassList.add('is-fullscreen', this.video.parentNode);
+    return this.isFullscreen = true;
+  };
+
+  FullscreenControl.prototype.exitFullscreen = function() {
+    Bigscreen.Utils.ClassList.remove('is-fullscreen', this.video.parentNode);
+    return this.isFullscreen = false;
+  };
+
+  FullscreenControl.prototype.getElement = function() {
+    return this.video.parentNode.querySelector('.bigscreen-fullscreen-control');
+  };
+
+  FullscreenControl.prototype.render = function() {
+    return JST['bigscreen/templates/fullscreen_control']();
+  };
+
+  return FullscreenControl;
+
+})();
+
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+this.Bigscreen || (this.Bigscreen = {});
+
 Bigscreen.PauseButton = (function() {
 
   function PauseButton(video) {
@@ -484,7 +528,8 @@ Bigscreen.Tv = (function() {
       playbackRateControl: (Bigscreen.Utils.FeatureDetects.playbackRate ? new Bigscreen.PlaybackRateControl(video) : null),
       captionControl: new Bigscreen.CaptionControl(video),
       captionLayer: new Bigscreen.CaptionLayer(video),
-      progressControl: new Bigscreen.ProgressControl(video)
+      progressControl: new Bigscreen.ProgressControl(video),
+      fullscreenControl: new Bigscreen.FullscreenControl(video)
     };
     this.render(this.features);
   }
@@ -660,6 +705,14 @@ __p+='<div class="bigscreen-caption-layer">\n  <div class="bigscreen-caption-con
 return __p;
 };
 
+this["JST"]["bigscreen/templates/fullscreen_control"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<a class="bigscreen-fullscreen-control">Toggle Fullscreen</a>\n';
+}
+return __p;
+};
+
 this["JST"]["bigscreen/templates/pause_button"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
@@ -695,23 +748,25 @@ return __p;
 this["JST"]["bigscreen/templates/tv"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+=''+
+__p+='<div class="bigscreen-layers">\n  '+
 ( captionLayer.render() )+
-'\n'+
+'\n</div>\n\n<div class="bigscreen-controls">\n  '+
 ( playButton.render() )+
-'\n'+
+'\n  '+
 ( pauseButton.render() )+
-'\n'+
+'\n  '+
 ( progressControl.render() )+
-'\n';
+'\n  ';
  if(playbackRateControl) { 
-;__p+='\n  '+
+;__p+='\n    '+
 ( playbackRateControl.render() )+
-'\n';
+'\n  ';
  } 
-;__p+='\n'+
+;__p+='\n  '+
 ( captionControl.render() )+
-'\n';
+'\n  '+
+( fullscreenControl.render() )+
+'\n</div>\n';
 }
 return __p;
 };

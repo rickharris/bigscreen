@@ -9,6 +9,7 @@ class Bigscreen.Tv
       captionControl: new Bigscreen.CaptionControl(video)
       captionLayer: new Bigscreen.CaptionLayer(video)
       progressControl: new Bigscreen.ProgressControl(video)
+      fullscreenControl: new Bigscreen.FullscreenControl(video)
     @render(@features)
 
   render: (features) ->
