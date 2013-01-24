@@ -19,7 +19,7 @@
 .bigscreen-controls {
   position: relative;
   background: rgba(51, 51, 51, 0.98);
-  bottom: 15px;
+  bottom: 0;
   height: 60px;
   -webkit-border-radius: 0 0 5px 5px;
   -moz-border-radius: 0 0 5px 5px;
@@ -167,6 +167,7 @@
 }
 
 .bigscreen-progress-control {
+  height: 60px;
   left: 36px;
   width: 100%;
 }

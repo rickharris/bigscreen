@@ -31,7 +31,7 @@ $sprite: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPEAAAB5CAYAAADoKMe8A
 .bigscreen-controls
   position: relative
   background: rgba($bg, .98)
-  bottom: 15px
+  bottom: 0
   height: $control-height
   +border-radius(0 0 5px 5px)
   padding-left: $control-play-pause-width * 2
@@ -147,6 +147,7 @@ $sprite: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPEAAAB5CAYAAADoKMe8A
     +opacity(1)
 
 .bigscreen-progress-control
+  height: $control-height
   left: $control-icon-width
   width: 100%
 
