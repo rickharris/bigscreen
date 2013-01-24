@@ -2,6 +2,8 @@
 
 class Bigscreen.Tv
   constructor: (@video) ->
+    Bigscreen.Utils.ClassList.add('bigscreen-is-paused', @video.parentNode)
+
     @features =
       playButton: new Bigscreen.PlayButton(video)
       pauseButton: new Bigscreen.PauseButton(video)

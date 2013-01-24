@@ -14,11 +14,11 @@ class Bigscreen.FullscreenControl
       @enterFullscreen()
 
   enterFullscreen: ->
-    Bigscreen.Utils.ClassList.add('is-fullscreen', @video.parentNode)
+    Bigscreen.Utils.ClassList.add('bigscreen-is-fullscreen', @video.parentNode)
     @isFullscreen = true
 
   exitFullscreen: ->
-    Bigscreen.Utils.ClassList.remove('is-fullscreen', @video.parentNode)
+    Bigscreen.Utils.ClassList.remove('bigscreen-is-fullscreen', @video.parentNode)
     @isFullscreen = false
 
   getElement: ->

@@ -191,12 +191,12 @@ Bigscreen.FullscreenControl = (function() {
   };
 
   FullscreenControl.prototype.enterFullscreen = function() {
-    Bigscreen.Utils.ClassList.add('is-fullscreen', this.video.parentNode);
+    Bigscreen.Utils.ClassList.add('bigscreen-is-fullscreen', this.video.parentNode);
     return this.isFullscreen = true;
   };
 
   FullscreenControl.prototype.exitFullscreen = function() {
-    Bigscreen.Utils.ClassList.remove('is-fullscreen', this.video.parentNode);
+    Bigscreen.Utils.ClassList.remove('bigscreen-is-fullscreen', this.video.parentNode);
     return this.isFullscreen = false;
   };
 
@@ -232,11 +232,11 @@ Bigscreen.PauseButton = (function() {
   }
 
   PauseButton.prototype.wasPaused = function() {
-    return Bigscreen.Utils.ClassList.add('is-paused', this.getElement());
+    return Bigscreen.Utils.ClassList.add('bigscreen-is-paused', this.video.parentNode);
   };
 
   PauseButton.prototype.wasPlayed = function() {
-    return Bigscreen.Utils.ClassList.remove('is-paused', this.getElement());
+    return Bigscreen.Utils.ClassList.remove('bigscreen-is-paused', this.video.parentNode);
   };
 
   PauseButton.prototype.onClick = function() {
@@ -277,11 +277,11 @@ Bigscreen.PlayButton = (function() {
   }
 
   PlayButton.prototype.wasPlayed = function(event) {
-    return Bigscreen.Utils.ClassList.add('is-playing', this.getElement());
+    return Bigscreen.Utils.ClassList.add('bigscreen-is-playing', this.video.parentNode);
   };
 
   PlayButton.prototype.wasPaused = function(event) {
-    return Bigscreen.Utils.ClassList.remove('is-playing', this.getElement());
+    return Bigscreen.Utils.ClassList.remove('bigscreen-is-playing', this.video.parentNode);
   };
 
   PlayButton.prototype.onClick = function(event) {
@@ -522,6 +522,7 @@ Bigscreen.Tv = (function() {
 
   function Tv(video) {
     this.video = video;
+    Bigscreen.Utils.ClassList.add('bigscreen-is-paused', this.video.parentNode);
     this.features = {
       playButton: new Bigscreen.PlayButton(video),
       pauseButton: new Bigscreen.PauseButton(video),
@@ -716,7 +717,7 @@ return __p;
 this["JST"]["bigscreen/templates/pause_button"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<a class="bigscreen-pause-button is-paused">Pause</a>\n';
+__p+='<a class="bigscreen-pause-button">Pause</a>\n';
 }
 return __p;
 };

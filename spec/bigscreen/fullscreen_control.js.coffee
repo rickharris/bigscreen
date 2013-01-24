@@ -16,7 +16,7 @@ describe "Bigscreen.FullscreenControl", ->
       @subject.enterFullscreen()
 
     it "adds the fullscreen state class to the container", ->
-      expect($(@container)).toHaveClass('is-fullscreen')
+      expect($(@container)).toHaveClass('bigscreen-is-fullscreen')
 
     it "sets #isFullscreen to true", ->
       expect(@subject.isFullscreen).toEqual(true)
@@ -27,7 +27,7 @@ describe "Bigscreen.FullscreenControl", ->
       @subject.exitFullscreen()
 
     it "removes the fullscreen state class from the container", ->
-      expect($(@container)).not.toHaveClass('is-fullscreen')
+      expect($(@container)).not.toHaveClass('bigscreen-is-fullscreen')
 
     it "sets #isFullscreen to false", ->
       expect(@subject.isFullscreen).toEqual(false)

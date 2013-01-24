@@ -8,10 +8,10 @@ class Bigscreen.PlayButton
       @video.parentNode, '.bigscreen-play-button', @onClick)
 
   wasPlayed: (event) =>
-    Bigscreen.Utils.ClassList.add('is-playing', @getElement())
+    Bigscreen.Utils.ClassList.add('bigscreen-is-playing', @video.parentNode)
 
   wasPaused: (event) =>
-    Bigscreen.Utils.ClassList.remove('is-playing', @getElement())
+    Bigscreen.Utils.ClassList.remove('bigscreen-is-playing', @video.parentNode)
 
   onClick: (event) =>
     @video.play() if @video.paused

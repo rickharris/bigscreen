@@ -27,10 +27,9 @@ describe "Bigscreen.PauseButton", ->
       , 1
       runs -> expect(@prototype.wasPaused).toHaveBeenCalled()
 
-    it "adds the 'is-paused' class to the view", ->
+    it "adds the 'bigscreen-is-paused' class to the container", ->
       @pauseButton.wasPaused()
-      el = $(@pauseButton.getElement())
-      expect(el).toHaveClass('is-paused')
+      expect($(video.parentNode)).toHaveClass('bigscreen-is-paused')
 
   describe "#wasPlayed", ->
     it "is called when the video is played", ->
@@ -40,9 +39,9 @@ describe "Bigscreen.PauseButton", ->
       , 1
       runs -> expect(@prototype.wasPlayed).toHaveBeenCalled()
 
-    it "removes the 'is-paused' class from the view", ->
+    it "removes the 'bigscreen-is-paused' class from the view", ->
       @pauseButton.wasPlayed()
-      expect($(@pauseButton.getElement())).not.toHaveClass('is-paused')
+      expect($(@video.parentNode)).not.toHaveClass('bigscreen-is-paused')
 
   describe "#onClick", ->
     it "is called when the view is clicked", ->
