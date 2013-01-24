@@ -677,19 +677,19 @@ var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
 __p+='';
  if (captionsData.length) { 
-;__p+='\n  <div class="bigscreen-caption-control">\n    <div class="bigscreen-control-headline">\n      Caption Language\n    </div>\n    <ul>\n      <li data-caption-language="none">\n        <input type="radio"\n          name="bigscreen-caption-language"\n          id="bigscreen-caption-language-none"\n          value="none"\n          checked>\n        <span class="bigscreen-label-value">None</span>\n      </li>\n\n      ';
+;__p+='\n  <div class="bigscreen-caption-control">\n    <div class="bigscreen-control-headline">\n      Caption Language\n    </div>\n    <ul>\n      <li data-caption-language="none">\n        <label>\n          <input type="radio"\n            name="bigscreen-caption-language"\n            id="bigscreen-caption-language-none"\n            value="none"\n            checked>\n          <span class="bigscreen-label-value">None</span>\n        </label>\n      </li>\n\n      ';
  for (var i in captionsData) { 
 ;__p+='\n        ';
  var track = captionsData[i] 
 ;__p+='\n        <li data-caption-language="'+
 ( track.language )+
-'">\n          <input type="radio"\n            name="bigscreen-caption-language"\n            id="bigscreen-caption-language-'+
+'">\n          <label>\n            <input type="radio"\n              name="bigscreen-caption-language"\n              id="bigscreen-caption-language-'+
 ( track.language )+
-'"\n            value="'+
+'"\n              value="'+
 ( track.language )+
-'">\n          <span class="bigscreen-label-value">'+
+'">\n            <span class="bigscreen-label-value">'+
 ( track.title )+
-'</span>\n        </li>\n      ';
+'</span>\n          </label>\n        </li>\n      ';
  } 
 ;__p+='\n    </ul>\n  </div>\n';
  } 

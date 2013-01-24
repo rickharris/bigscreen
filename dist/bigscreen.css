@@ -1,6 +1,7 @@
 .bigscreen {
   position: relative;
   padding-bottom: 60px;
+  font-family: "Helvetica Nueue", Helvetica, Arial, sans-serif;
 }
 .bigscreen video {
   vertical-align: middle;
@@ -127,11 +128,12 @@
   left: 50%;
   margin-left: -11px;
 }
-.bigscreen-caption-control ul li, .bigscreen-playback-rate-control ul li {
+.bigscreen-caption-control ul label, .bigscreen-playback-rate-control ul label {
+  display: block;
   padding: 5px 15px;
   cursor: pointer;
 }
-.bigscreen-caption-control ul li:hover, .bigscreen-playback-rate-control ul li:hover {
+.bigscreen-caption-control ul label:hover, .bigscreen-playback-rate-control ul label:hover {
   background: #333333;
   color: white;
 }
