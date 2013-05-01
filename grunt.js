@@ -15,7 +15,7 @@ module.exports = function(grunt) {
       },
       spec: {
         files: {
-          'compiled/<%= pkg.name %>_spec.js': 'spec/**/*.coffee'
+          'spec/<%= pkg.name %>_spec.js': 'spec/**/*.coffee'
         }
       }
     },
