@@ -63,7 +63,6 @@ module.exports = function(grunt) {
         // Start server.
         grunt.log
           .subhead( 'Starting static web server on port '.yellow + String( port ).red )
-          .writeln( '  - ' + path.resolve(opts.base) )
           .writeln('I\'ll also watch your files for changes and recompile if neccessary.')
           .writeln('Hit Ctrl+C to quit.');
 
