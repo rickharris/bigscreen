@@ -243,25 +243,22 @@
 
 .bigscreen-caption-layer {
   position: absolute;
-  bottom: 165px;
+  bottom: 120px;
   text-align: center;
   width: 100%;
 }
 
 .bigscreen-caption-content {
-  display: inline;
+  display: inline-block;
   font-size: 18px;
   padding: 12px 15px;
   background: black;
   color: white;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0 0 5px 5px;
-  -moz-box-shadow: rgba(0, 0, 0, 0.1) 0 0 5px 5px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0 0 5px 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  border-radius: 5px;
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
-  opacity: 0.8;
+  -webkit-border-radius: 5px 5px 0 0;
+  -moz-border-radius: 5px 5px 0 0;
+  -ms-border-radius: 5px 5px 0 0;
+  -o-border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=90);
+  opacity: 0.9;
 }

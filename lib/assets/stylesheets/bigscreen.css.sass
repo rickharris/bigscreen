@@ -202,16 +202,15 @@ $sprite: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPEAAAB5CAYAAADoKMe8A
 
 .bigscreen-caption-layer
   position: absolute
-  bottom: $control-height * 2.75
+  bottom: $control-height * 2
   text-align: center
   width: 100%
 
 .bigscreen-caption-content
-  display: inline
+  display: inline-block
   font-size: 18px
   padding: 12px 15px
   background: #000
   color: #fff
-  +box-shadow(rgba(0, 0, 0, 0.1) 0 0 5px 5px)
-  +border-radius(5px)
-  +opacity(0.8)
+  +border-radius(5px 5px 0 0)
+  +opacity(0.9)
