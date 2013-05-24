@@ -17,3 +17,4 @@
 
 You will need to have NPM & Node installed. All you need to do for setup is to
 run `npm install` and you're good to go.
+
