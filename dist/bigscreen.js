@@ -1,8 +1,6 @@
-
 this.Bigscreen || (this.Bigscreen = {});
 
 Bigscreen.CaptionControl = (function() {
-
   function CaptionControl(video) {
     this.video = video;
   }
@@ -42,13 +40,10 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 this.Bigscreen || (this.Bigscreen = {});
 
 Bigscreen.CaptionLayer = (function() {
-
   function CaptionLayer(video) {
     this.video = video;
     this.onTimeUpdate = __bind(this.onTimeUpdate, this);
-
     this.onLanguageChange = __bind(this.onLanguageChange, this);
-
     Bigscreen.Utils.Events.delegate('change', this.video.parentNode, '.bigscreen-caption-control input', this.onLanguageChange);
     this.processedLanguages = {
       error: "The selected language isn't available.",
@@ -68,19 +63,20 @@ Bigscreen.CaptionLayer = (function() {
   };
 
   CaptionLayer.prototype.processCaptionTrack = function(captionTrack) {
-    var _this = this;
     this.request = new XMLHttpRequest();
     this.request.open("GET", captionTrack.getAttribute('src'));
-    this.request.onreadystatechange = function() {
-      if (_this.request.readyState === 4) {
-        if (_this.request.status === 200) {
-          _this.parseCaptions(captionTrack.getAttribute('srclang'), _this.request.responseText);
-          return _this.setActiveLanguage(captionTrack.getAttribute('srclang'));
-        } else {
-          return _this.setActiveLanguage('error');
+    this.request.onreadystatechange = (function(_this) {
+      return function() {
+        if (_this.request.readyState === 4) {
+          if (_this.request.status === 200) {
+            _this.parseCaptions(captionTrack.getAttribute('srclang'), _this.request.responseText);
+            return _this.setActiveLanguage(captionTrack.getAttribute('srclang'));
+          } else {
+            return _this.setActiveLanguage('error');
+          }
         }
-      }
-    };
+      };
+    })(this);
     return this.request.send();
   };
 
@@ -173,11 +169,9 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 this.Bigscreen || (this.Bigscreen = {});
 
 Bigscreen.FullscreenControl = (function() {
-
   function FullscreenControl(video) {
     this.video = video;
     this.onClick = __bind(this.onClick, this);
-
     this.isFullscreen = false;
     Bigscreen.Utils.Events.delegate('click', this.video.parentNode, '.bigscreen-fullscreen-control', this.onClick);
   }
@@ -217,15 +211,11 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 this.Bigscreen || (this.Bigscreen = {});
 
 Bigscreen.PauseButton = (function() {
-
   function PauseButton(video) {
     this.video = video;
     this.onClick = __bind(this.onClick, this);
-
     this.wasPlayed = __bind(this.wasPlayed, this);
-
     this.wasPaused = __bind(this.wasPaused, this);
-
     this.video.addEventListener('pause', this.wasPaused);
     this.video.addEventListener('play', this.wasPlayed);
     Bigscreen.Utils.Events.delegate('click', this.video.parentNode, '.bigscreen-pause-button', this.onClick);
@@ -262,15 +252,11 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 this.Bigscreen || (this.Bigscreen = {});
 
 Bigscreen.PlayButton = (function() {
-
   function PlayButton(video) {
     this.video = video;
     this.onClick = __bind(this.onClick, this);
-
     this.wasPaused = __bind(this.wasPaused, this);
-
     this.wasPlayed = __bind(this.wasPlayed, this);
-
     this.video.addEventListener('play', this.wasPlayed);
     this.video.addEventListener('pause', this.wasPaused);
     Bigscreen.Utils.Events.delegate('click', this.video.parentNode, '.bigscreen-play-button', this.onClick);
@@ -307,17 +293,12 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 this.Bigscreen || (this.Bigscreen = {});
 
 Bigscreen.PlayToggle = (function() {
-
   function PlayToggle(video) {
     this.video = video;
     this.render = __bind(this.render, this);
-
     this.toggle = __bind(this.toggle, this);
-
     this.onPause = __bind(this.onPause, this);
-
     this.onPlay = __bind(this.onPlay, this);
-
     this.video.addEventListener('play', this.onPlay);
     this.video.addEventListener('pause', this.onPause);
     Bigscreen.Utils.Events.delegate('click', this.video.parentNode, '.bigscreen-play-toggle', this.toggle);
@@ -358,13 +339,10 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 this.Bigscreen || (this.Bigscreen = {});
 
 Bigscreen.PlaybackRateControl = (function() {
-
   function PlaybackRateControl(video) {
     this.video = video;
     this.onOptionChange = __bind(this.onOptionChange, this);
-
     this.rateWasChanged = __bind(this.rateWasChanged, this);
-
     this.video.addEventListener('ratechange', this.rateWasChanged);
     Bigscreen.Utils.Events.delegate('change', this.video.parentNode, '.bigscreen-playback-rate-control input', this.onOptionChange);
   }
@@ -400,19 +378,13 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 this.Bigscreen || (this.Bigscreen = {});
 
 Bigscreen.ProgressControl = (function() {
-
   function ProgressControl(video) {
     this.video = video;
     this.onMouseMove = __bind(this.onMouseMove, this);
-
     this.onMouseOut = __bind(this.onMouseOut, this);
-
     this.onMouseOver = __bind(this.onMouseOver, this);
-
     this.onClick = __bind(this.onClick, this);
-
     this.onTimeUpdate = __bind(this.onTimeUpdate, this);
-
     this.video.addEventListener('timeupdate', this.onTimeUpdate);
     this.video.addEventListener('load', this.setDuration);
     Bigscreen.Utils.Events.delegate('click', this.video.parentNode, '.bigscreen-progress-bar', this.onClick);
@@ -515,11 +487,9 @@ Bigscreen.ProgressControl = (function() {
 
 })();
 
-
 this.Bigscreen || (this.Bigscreen = {});
 
 Bigscreen.Tv = (function() {
-
   function Tv(video) {
     this.video = video;
     Bigscreen.Utils.ClassList.add('bigscreen-is-paused', this.video.parentNode);
@@ -547,13 +517,11 @@ Bigscreen.Tv = (function() {
 
 })();
 
-
 this.Bigscreen || (this.Bigscreen = {});
 
 Bigscreen.Utils || (Bigscreen.Utils = {});
 
 Bigscreen.Utils.ClassList = (function() {
-
   function ClassList() {}
 
   ClassList.supportsClassList = document.documentElement.classList != null;
@@ -597,13 +565,11 @@ Bigscreen.Utils.ClassList = (function() {
 
 })();
 
-
 this.Bigscreen || (this.Bigscreen = {});
 
 Bigscreen.Utils || (Bigscreen.Utils = {});
 
 Bigscreen.Utils.Enumerable = (function() {
-
   function Enumerable() {}
 
   Enumerable.includes = function(enumerable, item) {
@@ -625,13 +591,11 @@ Bigscreen.Utils.Enumerable = (function() {
 
 })();
 
-
 this.Bigscreen || (this.Bigscreen = {});
 
 Bigscreen.Utils || (Bigscreen.Utils = {});
 
 Bigscreen.Utils.Events = (function() {
-
   function Events() {}
 
   Events.delegate = function(eventName, context, selector, callback) {
@@ -655,13 +619,11 @@ Bigscreen.Utils.Events = (function() {
 
 })();
 
-
 this.Bigscreen || (this.Bigscreen = {});
 
 Bigscreen.Utils || (Bigscreen.Utils = {});
 
 Bigscreen.Utils.FeatureDetects = (function() {
-
   function FeatureDetects() {}
 
   FeatureDetects.playbackRate = document.createElement('video').playbackRate != null;
@@ -671,102 +633,94 @@ Bigscreen.Utils.FeatureDetects = (function() {
 })();
 
 this["JST"] = this["JST"] || {};
-
 this["JST"]["bigscreen/templates/caption_control"] = function(obj){
-var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
 __p+='';
  if (captionsData.length) { 
-;__p+='\n  <div class="bigscreen-caption-control">\n    <div class="bigscreen-control-headline">\n      Caption Language\n    </div>\n    <ul>\n      <li data-caption-language="none">\n        <label>\n          <input type="radio"\n            name="bigscreen-caption-language"\n            id="bigscreen-caption-language-none"\n            value="none"\n            checked>\n          <span class="bigscreen-label-value">None</span>\n        </label>\n      </li>\n\n      ';
+__p+='\n  <div class="bigscreen-caption-control">\n    <div class="bigscreen-control-headline">\n      Caption Language\n    </div>\n    <ul>\n      <li data-caption-language="none">\n        <label>\n          <input type="radio"\n            name="bigscreen-caption-language"\n            id="bigscreen-caption-language-none"\n            value="none"\n            checked>\n          <span class="bigscreen-label-value">None</span>\n        </label>\n      </li>\n\n      ';
  for (var i in captionsData) { 
-;__p+='\n        ';
+__p+='\n        ';
  var track = captionsData[i] 
-;__p+='\n        <li data-caption-language="'+
-( track.language )+
+__p+='\n        <li data-caption-language="'+
+((__t=( track.language ))==null?'':__t)+
 '">\n          <label>\n            <input type="radio"\n              name="bigscreen-caption-language"\n              id="bigscreen-caption-language-'+
-( track.language )+
+((__t=( track.language ))==null?'':__t)+
 '"\n              value="'+
-( track.language )+
+((__t=( track.language ))==null?'':__t)+
 '">\n            <span class="bigscreen-label-value">'+
-( track.title )+
+((__t=( track.title ))==null?'':__t)+
 '</span>\n          </label>\n        </li>\n      ';
  } 
-;__p+='\n    </ul>\n  </div>\n';
+__p+='\n    </ul>\n  </div>\n';
  } 
-;__p+='\n';
+__p+='\n';
 }
 return __p;
 };
-
 this["JST"]["bigscreen/templates/caption_layer"] = function(obj){
-var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
 __p+='<div class="bigscreen-caption-layer">\n  <div class="bigscreen-caption-content">\n  </div>\n</div>\n';
 }
 return __p;
 };
-
 this["JST"]["bigscreen/templates/fullscreen_control"] = function(obj){
-var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
 __p+='<a class="bigscreen-fullscreen-control">Toggle Fullscreen</a>\n';
 }
 return __p;
 };
-
 this["JST"]["bigscreen/templates/pause_button"] = function(obj){
-var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
 __p+='<a class="bigscreen-pause-button">Pause</a>\n';
 }
 return __p;
 };
-
 this["JST"]["bigscreen/templates/play_button"] = function(obj){
-var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
 __p+='<a class="bigscreen-play-button">Play</a>\n';
 }
 return __p;
 };
-
 this["JST"]["bigscreen/templates/playback_rate_control"] = function(obj){
-var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
 __p+='<div class="bigscreen-playback-rate-control">\n  <div class="bigscreen-control-headline">\n    Video speed\n  </div>\n  <ul>\n    <li data-playback-rate="1">\n      <label for="bigscreen-playback-rate-normal">\n        <input type="radio"\n          name="bigscreen-playback-rate"\n          id="bigscreen-playback-rate-normal"\n          value="1"\n          checked>\n        <span class="bigscreen-label-value">Normal</span>\n      </label>\n    </li>\n    <li data-playback-rate="1.5">\n      <label for="bigscreen-playback-rate-1-5x">\n        <input type="radio"\n          name="bigscreen-playback-rate"\n          id="bigscreen-playback-rate-1-5x"\n          value="1.5">\n        <span class="bigscreen-label-value">1.5x</span>\n      </label>\n    </li>\n    <li data-playback-rate="2">\n      <label for="bigscreen-playback-rate-2-0x">\n        <input type="radio"\n          name="bigscreen-playback-rate"\n          id="bigscreen-playback-rate-2-0x"\n          value="2">\n        <span class="bigscreen-label-value">2.0x</span>\n      </label>\n    </li>\n  </ul>\n</div>\n';
 }
 return __p;
 };
-
 this["JST"]["bigscreen/templates/progress_control"] = function(obj){
-var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
 __p+='<div class="bigscreen-progress-control">\n  <div class="bigscreen-time-label bigscreen-current-time-label">0:00</div>\n  <div class="bigscreen-progress-bar">\n    <div class="bigscreen-progress"></div>\n    <div class="bigscreen-progress-tooltip" style="display: none">0:00</div>\n  </div>\n  <div class="bigscreen-time-label bigscreen-duration-label">0:00</div>\n</div>\n';
 }
 return __p;
 };
-
 this["JST"]["bigscreen/templates/tv"] = function(obj){
-var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
 __p+='<div class="bigscreen-layers">\n  '+
-( captionLayer.render() )+
+((__t=( captionLayer.render() ))==null?'':__t)+
 '\n</div>\n\n<div class="bigscreen-controls">\n  '+
-( playButton.render() )+
+((__t=( playButton.render() ))==null?'':__t)+
 '\n  '+
-( pauseButton.render() )+
+((__t=( pauseButton.render() ))==null?'':__t)+
 '\n  '+
-( progressControl.render() )+
+((__t=( progressControl.render() ))==null?'':__t)+
 '\n  ';
  if(playbackRateControl) { 
-;__p+='\n    '+
-( playbackRateControl.render() )+
+__p+='\n    '+
+((__t=( playbackRateControl.render() ))==null?'':__t)+
 '\n  ';
  } 
-;__p+='\n  '+
-( captionControl.render() )+
+__p+='\n  '+
+((__t=( captionControl.render() ))==null?'':__t)+
 '\n  '+
-( fullscreenControl.render() )+
+((__t=( fullscreenControl.render() ))==null?'':__t)+
 '\n</div>\n';
 }
 return __p;

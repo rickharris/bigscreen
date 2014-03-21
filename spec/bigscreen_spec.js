@@ -1,5 +1,4 @@
 (function() {
-
   describe("Bigscreen.CaptionControl", function() {
     describe("#captionsData", function() {
       it("returns an empty array if the video has no caption tracks", function() {
@@ -48,7 +47,6 @@
 }).call(this);
 
 (function() {
-
   describe("Bigscreen.CaptionLayer", function() {
     return describe("#onLanguageChange", function() {
       beforeEach(function() {
@@ -70,7 +68,6 @@
 }).call(this);
 
 (function() {
-
   describe("Bigscreen.FullscreenControl", function() {
     beforeEach(function() {
       var video;
@@ -127,7 +124,6 @@
 }).call(this);
 
 (function() {
-
   describe("Bigscreen.PauseButton", function() {
     beforeEach(function() {
       loadFixtures('video.html');
@@ -190,7 +186,6 @@
 }).call(this);
 
 (function() {
-
   describe("Bigscreen.PlayButton", function() {
     beforeEach(function() {
       loadFixtures('video.html');
@@ -261,7 +256,6 @@
 }).call(this);
 
 (function() {
-
   describe("Bigscreen.PlaybackRateControl", function() {
     beforeEach(function() {
       loadFixtures('video.html');
@@ -338,7 +332,6 @@
 }).call(this);
 
 (function() {
-
   describe("Bigscreen.Tv", function() {
     return it("adds the paused state class to the container", function() {
       var container, video;
@@ -354,7 +347,6 @@
 }).call(this);
 
 (function() {
-
   describe("Bigscreen.Utils.ClassList", function() {
     beforeEach(function() {
       this.subject = Bigscreen.Utils.ClassList;
@@ -383,7 +375,6 @@
 }).call(this);
 
 (function() {
-
   describe("Bigscreen.Utils.Enumerable", function() {
     return describe(".includes", function() {
       it("returns true if the item in question is in the enumerable", function() {
@@ -408,7 +399,6 @@
 }).call(this);
 
 (function() {
-
   describe("Bigscreen.Utils.Events", function() {
     return describe(".delegate", function() {
       beforeEach(function() {
@@ -444,12 +434,13 @@
         return expect(this.callback).not.toHaveBeenCalled();
       });
       it("passes the event object as the first argument to the callback", function() {
-        var event,
-          _this = this;
+        var event;
         event = void 0;
-        Bigscreen.Utils.Events.delegate('click', this.root, '#target', function(e) {
-          return event = e;
-        });
+        Bigscreen.Utils.Events.delegate('click', this.root, '#target', (function(_this) {
+          return function(e) {
+            return event = e;
+          };
+        })(this));
         this.target.click();
         return expect(event).toBeDefined();
       });
