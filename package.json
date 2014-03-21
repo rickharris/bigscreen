@@ -21,13 +21,11 @@
       "spec/TapSpecRunner.html"
     ],
     "browsers": [
-      "ie/8..10",
-      "firefox/3.5",
+      "ie/9..10",
       "firefox/latest",
       "chrome/latest",
       "safari/latest",
-      "opera/11",
-      "opera/next"
+      "opera/latest"
     ]
   }
 }
