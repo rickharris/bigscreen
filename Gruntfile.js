@@ -12,11 +12,6 @@ module.exports = function(grunt) {
         options: {
           bare: true
         }
-      },
-      spec: {
-        files: {
-          'spec/bigscreen_spec.js': 'spec/**/*.coffee'
-        }
       }
     },
     'template-module': {
@@ -77,15 +72,15 @@ module.exports = function(grunt) {
           'lib/assets/javascripts/bigscreen/**/*.coffee',
           'lib/assets/javascripts/bigscreen/templates/*.jst.ejs'
         ],
-        tasks: ['coffee:src', 'template-module', 'concat', 'uglify']
+        tasks: ['coffee:src', 'template-module', 'concat', 'uglify', 'karma:unit:run']
+      },
+      spec: {
+        files: ['spec/bigscreen/**/*_spec.coffee'],
+        tasks: ['karma:unit:run']
       },
       css: {
         files: 'lib/assets/stylesheets/bigscreen.css.sass',
         tasks: ['compass:dev', 'cssmin']
-      },
-      spec: {
-        files: 'spec/**/*.coffee',
-        tasks: ['coffee:spec']
       }
     },
     connect: {
@@ -93,6 +88,13 @@ module.exports = function(grunt) {
         options: {
           port: 9001
         }
+      }
+    },
+    karma: {
+      unit: {
+        configFile: 'karma.conf.js',
+        autoWatch: false,
+        background: true
       }
     }
   });
@@ -106,8 +108,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-karma');
 
   grunt.registerTask('compile', ['clean', 'coffee', 'template-module',
                      'concat', 'uglify', 'compass', 'cssmin']);
-  grunt.registerTask('default', ['compile', 'connect', 'watch']);
+  grunt.registerTask('default', ['compile', 'karma:unit', 'connect', 'watch']);
 };
