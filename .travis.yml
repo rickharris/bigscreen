@@ -8,7 +8,7 @@ env:
   - secure: UwC95zbvXw4SE+pVT8PqimabvtdGg26XTe1oX9PoXynFClu/OB7cGkH7JFKU+hv6yz0E6Fp/be3THhlAHq+FWhZZXeHJVRyA05xMCI5BPqxIUE3ZHBeAlBc3Hs5q9qXxjK1anzHeJzrBRcqYSYMFHS76IdwI3rBgMvAv8kJtZew=
 
 before_script:
-  - npm install -g grunt-cli
+  - npm install -g karma-cli
 
 script:
-  - grunt karma:continuous
+  - karma start karma-ci.conf.js

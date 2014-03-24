@@ -4,8 +4,9 @@
 ## Setup
 
 1. `npm install`
-2. `npm install -g grunt-cli`
-3. `grunt`
+2. `npm install -g karma-cli gulp`
+3. `gem install foreman`
+3. `foreman start`
 
 ## Contributing
 
