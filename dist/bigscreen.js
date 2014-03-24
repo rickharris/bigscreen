@@ -591,96 +591,414 @@ Bigscreen.Utils.FeatureDetects = (function() {
 
 })();
 
-this["JST"] = this["JST"] || {};
-this["JST"]["bigscreen/templates/caption_control"] = function(obj){
-var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-with(obj||{}){
-__p+='';
- if (captionsData.length) { 
-__p+='\n  <div class="bigscreen-caption-control">\n    <div class="bigscreen-control-headline">\n      Caption Language\n    </div>\n    <ul>\n      <li data-caption-language="none">\n        <label>\n          <input type="radio"\n            name="bigscreen-caption-language"\n            id="bigscreen-caption-language-none"\n            value="none"\n            checked>\n          <span class="bigscreen-label-value">None</span>\n        </label>\n      </li>\n\n      ';
- for (var i in captionsData) { 
-__p+='\n        ';
- var track = captionsData[i] 
-__p+='\n        <li data-caption-language="'+
-((__t=( track.language ))==null?'':__t)+
-'">\n          <label>\n            <input type="radio"\n              name="bigscreen-caption-language"\n              id="bigscreen-caption-language-'+
-((__t=( track.language ))==null?'':__t)+
-'"\n              value="'+
-((__t=( track.language ))==null?'':__t)+
-'">\n            <span class="bigscreen-label-value">'+
-((__t=( track.title ))==null?'':__t)+
-'</span>\n          </label>\n        </li>\n      ';
- } 
-__p+='\n    </ul>\n  </div>\n';
- } 
-__p+='\n';
+if (!window.JST) {
+  window.JST = {};
 }
-return __p;
+window.JST["bigscreen/templates/caption_control"] = function(__obj) {
+  var _safe = function(value) {
+    if (typeof value === 'undefined' && value == null)
+      value = '';
+    var result = new String(value);
+    result.ecoSafe = true;
+    return result;
+  };
+  return (function() {
+    var __out = [], __self = this, _print = function(value) {
+      if (typeof value !== 'undefined' && value != null)
+        __out.push(value.ecoSafe ? value : __self.escape(value));
+    }, _capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return _safe(result);
+    };
+    (function() {
+      var track, _i, _len, _ref;
+    
+      if (this.captionsData.length) {
+        _print(_safe('\n  <div class="bigscreen-caption-control">\n    <div class="bigscreen-control-headline">\n      Caption Language\n    </div>\n    <ul>\n      <li data-caption-language="none">\n        <label>\n          <input type="radio"\n            name="bigscreen-caption-language"\n            id="bigscreen-caption-language-none"\n            value="none"\n            checked>\n          <span class="bigscreen-label-value">None</span>\n        </label>\n      </li>\n\n      '));
+        _ref = this.captionsData;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          track = _ref[_i];
+          _print(_safe('\n        <li data-caption-language="'));
+          _print(track.language);
+          _print(_safe('">\n          <label>\n            <input type="radio"\n              name="bigscreen-caption-language"\n              id="bigscreen-caption-language-'));
+          _print(track.language);
+          _print(_safe('"\n              value="'));
+          _print(track.language);
+          _print(_safe('">\n            <span class="bigscreen-label-value">'));
+          _print(track.title);
+          _print(_safe('</span>\n          </label>\n        </li>\n      '));
+        }
+        _print(_safe('\n    </ul>\n  </div>\n'));
+      }
+    
+      _print(_safe('\n'));
+    
+    }).call(this);
+    
+    return __out.join('');
+  }).call((function() {
+    var obj = {
+      escape: function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      },
+      safe: _safe
+    }, key;
+    for (key in __obj) obj[key] = __obj[key];
+    return obj;
+  })());
 };
-this["JST"]["bigscreen/templates/caption_layer"] = function(obj){
-var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-with(obj||{}){
-__p+='<div class="bigscreen-caption-layer">\n  <div class="bigscreen-caption-content">\n  </div>\n</div>\n';
+
+if (!window.JST) {
+  window.JST = {};
 }
-return __p;
+window.JST["bigscreen/templates/caption_layer"] = function(__obj) {
+  var _safe = function(value) {
+    if (typeof value === 'undefined' && value == null)
+      value = '';
+    var result = new String(value);
+    result.ecoSafe = true;
+    return result;
+  };
+  return (function() {
+    var __out = [], __self = this, _print = function(value) {
+      if (typeof value !== 'undefined' && value != null)
+        __out.push(value.ecoSafe ? value : __self.escape(value));
+    }, _capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return _safe(result);
+    };
+    (function() {
+      _print(_safe('<div class="bigscreen-caption-layer">\n  <div class="bigscreen-caption-content">\n  </div>\n</div>\n'));
+    
+    }).call(this);
+    
+    return __out.join('');
+  }).call((function() {
+    var obj = {
+      escape: function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      },
+      safe: _safe
+    }, key;
+    for (key in __obj) obj[key] = __obj[key];
+    return obj;
+  })());
 };
-this["JST"]["bigscreen/templates/fullscreen_control"] = function(obj){
-var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-with(obj||{}){
-__p+='<a class="bigscreen-fullscreen-control">Toggle Fullscreen</a>\n';
+
+if (!window.JST) {
+  window.JST = {};
 }
-return __p;
+window.JST["bigscreen/templates/fullscreen_control"] = function(__obj) {
+  var _safe = function(value) {
+    if (typeof value === 'undefined' && value == null)
+      value = '';
+    var result = new String(value);
+    result.ecoSafe = true;
+    return result;
+  };
+  return (function() {
+    var __out = [], __self = this, _print = function(value) {
+      if (typeof value !== 'undefined' && value != null)
+        __out.push(value.ecoSafe ? value : __self.escape(value));
+    }, _capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return _safe(result);
+    };
+    (function() {
+      _print(_safe('<a class="bigscreen-fullscreen-control">Toggle Fullscreen</a>\n'));
+    
+    }).call(this);
+    
+    return __out.join('');
+  }).call((function() {
+    var obj = {
+      escape: function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      },
+      safe: _safe
+    }, key;
+    for (key in __obj) obj[key] = __obj[key];
+    return obj;
+  })());
 };
-this["JST"]["bigscreen/templates/pause_button"] = function(obj){
-var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-with(obj||{}){
-__p+='<a class="bigscreen-pause-button">Pause</a>\n';
+
+if (!window.JST) {
+  window.JST = {};
 }
-return __p;
+window.JST["bigscreen/templates/pause_button"] = function(__obj) {
+  var _safe = function(value) {
+    if (typeof value === 'undefined' && value == null)
+      value = '';
+    var result = new String(value);
+    result.ecoSafe = true;
+    return result;
+  };
+  return (function() {
+    var __out = [], __self = this, _print = function(value) {
+      if (typeof value !== 'undefined' && value != null)
+        __out.push(value.ecoSafe ? value : __self.escape(value));
+    }, _capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return _safe(result);
+    };
+    (function() {
+      _print(_safe('<a class="bigscreen-pause-button">Pause</a>\n'));
+    
+    }).call(this);
+    
+    return __out.join('');
+  }).call((function() {
+    var obj = {
+      escape: function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      },
+      safe: _safe
+    }, key;
+    for (key in __obj) obj[key] = __obj[key];
+    return obj;
+  })());
 };
-this["JST"]["bigscreen/templates/play_button"] = function(obj){
-var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-with(obj||{}){
-__p+='<a class="bigscreen-play-button">Play</a>\n';
+
+if (!window.JST) {
+  window.JST = {};
 }
-return __p;
+window.JST["bigscreen/templates/play_button"] = function(__obj) {
+  var _safe = function(value) {
+    if (typeof value === 'undefined' && value == null)
+      value = '';
+    var result = new String(value);
+    result.ecoSafe = true;
+    return result;
+  };
+  return (function() {
+    var __out = [], __self = this, _print = function(value) {
+      if (typeof value !== 'undefined' && value != null)
+        __out.push(value.ecoSafe ? value : __self.escape(value));
+    }, _capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return _safe(result);
+    };
+    (function() {
+      _print(_safe('<a class="bigscreen-play-button">Play</a>\n'));
+    
+    }).call(this);
+    
+    return __out.join('');
+  }).call((function() {
+    var obj = {
+      escape: function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      },
+      safe: _safe
+    }, key;
+    for (key in __obj) obj[key] = __obj[key];
+    return obj;
+  })());
 };
-this["JST"]["bigscreen/templates/playback_rate_control"] = function(obj){
-var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-with(obj||{}){
-__p+='<div class="bigscreen-playback-rate-control">\n  <div class="bigscreen-control-headline">\n    Video speed\n  </div>\n  <ul>\n    <li data-playback-rate="1">\n      <label for="bigscreen-playback-rate-normal">\n        <input type="radio"\n          name="bigscreen-playback-rate"\n          id="bigscreen-playback-rate-normal"\n          value="1"\n          checked>\n        <span class="bigscreen-label-value">Normal</span>\n      </label>\n    </li>\n    <li data-playback-rate="1.5">\n      <label for="bigscreen-playback-rate-1-5x">\n        <input type="radio"\n          name="bigscreen-playback-rate"\n          id="bigscreen-playback-rate-1-5x"\n          value="1.5">\n        <span class="bigscreen-label-value">1.5x</span>\n      </label>\n    </li>\n    <li data-playback-rate="2">\n      <label for="bigscreen-playback-rate-2-0x">\n        <input type="radio"\n          name="bigscreen-playback-rate"\n          id="bigscreen-playback-rate-2-0x"\n          value="2">\n        <span class="bigscreen-label-value">2.0x</span>\n      </label>\n    </li>\n  </ul>\n</div>\n';
+
+if (!window.JST) {
+  window.JST = {};
 }
-return __p;
+window.JST["bigscreen/templates/playback_rate_control"] = function(__obj) {
+  var _safe = function(value) {
+    if (typeof value === 'undefined' && value == null)
+      value = '';
+    var result = new String(value);
+    result.ecoSafe = true;
+    return result;
+  };
+  return (function() {
+    var __out = [], __self = this, _print = function(value) {
+      if (typeof value !== 'undefined' && value != null)
+        __out.push(value.ecoSafe ? value : __self.escape(value));
+    }, _capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return _safe(result);
+    };
+    (function() {
+      _print(_safe('<div class="bigscreen-playback-rate-control">\n  <div class="bigscreen-control-headline">\n    Video speed\n  </div>\n  <ul>\n    <li data-playback-rate="1">\n      <label for="bigscreen-playback-rate-normal">\n        <input type="radio"\n          name="bigscreen-playback-rate"\n          id="bigscreen-playback-rate-normal"\n          value="1"\n          checked>\n        <span class="bigscreen-label-value">Normal</span>\n      </label>\n    </li>\n    <li data-playback-rate="1.5">\n      <label for="bigscreen-playback-rate-1-5x">\n        <input type="radio"\n          name="bigscreen-playback-rate"\n          id="bigscreen-playback-rate-1-5x"\n          value="1.5">\n        <span class="bigscreen-label-value">1.5x</span>\n      </label>\n    </li>\n    <li data-playback-rate="2">\n      <label for="bigscreen-playback-rate-2-0x">\n        <input type="radio"\n          name="bigscreen-playback-rate"\n          id="bigscreen-playback-rate-2-0x"\n          value="2">\n        <span class="bigscreen-label-value">2.0x</span>\n      </label>\n    </li>\n  </ul>\n</div>\n'));
+    
+    }).call(this);
+    
+    return __out.join('');
+  }).call((function() {
+    var obj = {
+      escape: function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      },
+      safe: _safe
+    }, key;
+    for (key in __obj) obj[key] = __obj[key];
+    return obj;
+  })());
 };
-this["JST"]["bigscreen/templates/progress_control"] = function(obj){
-var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-with(obj||{}){
-__p+='<div class="bigscreen-progress-control">\n  <div class="bigscreen-time-label bigscreen-current-time-label">0:00</div>\n  <div class="bigscreen-progress-bar">\n    <div class="bigscreen-progress"></div>\n    <div class="bigscreen-progress-tooltip" style="display: none">0:00</div>\n  </div>\n  <div class="bigscreen-time-label bigscreen-duration-label">0:00</div>\n</div>\n';
+
+if (!window.JST) {
+  window.JST = {};
 }
-return __p;
+window.JST["bigscreen/templates/progress_control"] = function(__obj) {
+  var _safe = function(value) {
+    if (typeof value === 'undefined' && value == null)
+      value = '';
+    var result = new String(value);
+    result.ecoSafe = true;
+    return result;
+  };
+  return (function() {
+    var __out = [], __self = this, _print = function(value) {
+      if (typeof value !== 'undefined' && value != null)
+        __out.push(value.ecoSafe ? value : __self.escape(value));
+    }, _capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return _safe(result);
+    };
+    (function() {
+      _print(_safe('<div class="bigscreen-progress-control">\n  <div class="bigscreen-time-label bigscreen-current-time-label">0:00</div>\n  <div class="bigscreen-progress-bar">\n    <div class="bigscreen-progress"></div>\n    <div class="bigscreen-progress-tooltip" style="display: none">0:00</div>\n  </div>\n  <div class="bigscreen-time-label bigscreen-duration-label">0:00</div>\n</div>\n'));
+    
+    }).call(this);
+    
+    return __out.join('');
+  }).call((function() {
+    var obj = {
+      escape: function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      },
+      safe: _safe
+    }, key;
+    for (key in __obj) obj[key] = __obj[key];
+    return obj;
+  })());
 };
-this["JST"]["bigscreen/templates/tv"] = function(obj){
-var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-with(obj||{}){
-__p+='<div class="bigscreen-layers">\n  '+
-((__t=( captionLayer.render() ))==null?'':__t)+
-'\n</div>\n\n<div class="bigscreen-controls">\n  '+
-((__t=( playButton.render() ))==null?'':__t)+
-'\n  '+
-((__t=( pauseButton.render() ))==null?'':__t)+
-'\n  '+
-((__t=( progressControl.render() ))==null?'':__t)+
-'\n  ';
- if(playbackRateControl) { 
-__p+='\n    '+
-((__t=( playbackRateControl.render() ))==null?'':__t)+
-'\n  ';
- } 
-__p+='\n  '+
-((__t=( captionControl.render() ))==null?'':__t)+
-'\n  '+
-((__t=( fullscreenControl.render() ))==null?'':__t)+
-'\n</div>\n';
+
+if (!window.JST) {
+  window.JST = {};
 }
-return __p;
+window.JST["bigscreen/templates/tv"] = function(__obj) {
+  var _safe = function(value) {
+    if (typeof value === 'undefined' && value == null)
+      value = '';
+    var result = new String(value);
+    result.ecoSafe = true;
+    return result;
+  };
+  return (function() {
+    var __out = [], __self = this, _print = function(value) {
+      if (typeof value !== 'undefined' && value != null)
+        __out.push(value.ecoSafe ? value : __self.escape(value));
+    }, _capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return _safe(result);
+    };
+    (function() {
+      _print(_safe('<div class="bigscreen-layers">\n  '));
+    
+      _print(_safe(this.captionLayer.render()));
+    
+      _print(_safe('\n</div>\n\n<div class="bigscreen-controls">\n  '));
+    
+      _print(_safe(this.playButton.render()));
+    
+      _print(_safe('\n  '));
+    
+      _print(_safe(this.pauseButton.render()));
+    
+      _print(_safe('\n  '));
+    
+      _print(_safe(this.progressControl.render()));
+    
+      _print(_safe('\n  '));
+    
+      if (this.playbackRateControl) {
+        _print(_safe('\n    '));
+        _print(_safe(this.playbackRateControl.render()));
+        _print(_safe('\n  '));
+      }
+    
+      _print(_safe('\n  '));
+    
+      _print(_safe(this.captionControl.render()));
+    
+      _print(_safe('\n  '));
+    
+      _print(_safe(this.fullscreenControl.render()));
+    
+      _print(_safe('\n</div>\n'));
+    
+    }).call(this);
+    
+    return __out.join('');
+  }).call((function() {
+    var obj = {
+      escape: function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      },
+      safe: _safe
+    }, key;
+    for (key in __obj) obj[key] = __obj[key];
+    return obj;
+  })());
 };

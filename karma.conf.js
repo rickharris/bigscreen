@@ -2,7 +2,8 @@ module.exports = function(config) {
   config.set({
     frameworks: ['jasmine'],
     files: [
-      'dist/bigscreen.js',
+      'lib/assets/javascripts/bigscreen/**/*.coffee',
+      'lib/assets/javascripts/bigscreen/templates/**/*.eco',
       'spec/lib/jquery-1.8.3.js',
       'spec/lib/jasmine-jquery-1.3.1.js',
       'spec/fixtures.coffee',
@@ -13,7 +14,19 @@ module.exports = function(config) {
       }
     ],
     preprocessors: {
-      '**/*.coffee': ['coffee']
+      '**/*.coffee': ['coffee'],
+      '**/*.eco': ['eco']
+    },
+    coffeePreprocessor: {
+      options: {
+        sourceMap: true
+      }
+    },
+    ecoPreprocessor: {
+      options: {
+        baseTemplatePath: 'lib/assets/javascripts',
+        enableJSTGlobalVariable: true
+      }
     },
     reporters: ['dots'],
     port: 9876,

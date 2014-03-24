@@ -1,0 +1,14 @@
+<div class="bigscreen-layers">
+  <%- @captionLayer.render() %>
+</div>
+
+<div class="bigscreen-controls">
+  <%- @playButton.render() %>
+  <%- @pauseButton.render() %>
+  <%- @progressControl.render() %>
+  <% if @playbackRateControl: %>
+    <%- @playbackRateControl.render() %>
+  <% end %>
+  <%- @captionControl.render() %>
+  <%- @fullscreenControl.render() %>
+</div>

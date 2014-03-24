@@ -14,19 +14,14 @@ module.exports = function(grunt) {
         }
       }
     },
-    'template-module': {
+    eco: {
       compile: {
         options: {
-          processName: function(filename) {
-            var dir = path.dirname(filename).replace("lib/assets/javascripts/", "");
-            var basename = path.basename(filename, ".jst.ejs");
-            return path.join(dir, basename);
-          },
-          module: false,
-          provider: 'underscore'
+          basePath: 'lib/assets/javascripts'
         },
         files: {
-          'compiled/bigscreen_templates.js': 'lib/assets/javascripts/bigscreen/templates/*.jst.ejs'
+          'compiled/bigscreen_templates.js':
+            'lib/assets/javascripts/bigscreen/templates/**/*.eco'
         }
       }
     },
@@ -70,9 +65,9 @@ module.exports = function(grunt) {
       js: {
         files: [
           'lib/assets/javascripts/bigscreen/**/*.coffee',
-          'lib/assets/javascripts/bigscreen/templates/*.jst.ejs'
+          'lib/assets/javascripts/bigscreen/templates/*.eco'
         ],
-        tasks: ['coffee:src', 'template-module', 'concat', 'uglify', 'karma:unit:run']
+        tasks: ['coffee:src', 'eco', 'concat', 'uglify', 'karma:unit:run']
       },
       spec: {
         files: ['spec/bigscreen/**/*_spec.coffee'],
@@ -115,7 +110,7 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-coffee');
-  grunt.loadNpmTasks('grunt-template-module');
+  grunt.loadNpmTasks('grunt-eco');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-compass');
@@ -124,7 +119,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-karma');
 
-  grunt.registerTask('compile', ['clean', 'coffee', 'template-module',
-                     'concat', 'uglify', 'compass', 'cssmin']);
+  grunt.registerTask('compile', ['clean', 'coffee', 'eco', 'concat', 'uglify',
+                     'compass', 'cssmin']);
   grunt.registerTask('default', ['compile', 'karma:unit', 'connect', 'watch']);
 };

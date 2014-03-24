@@ -1,4 +1,4 @@
-<% if (captionsData.length) { %>
+<% if @captionsData.length: %>
   <div class="bigscreen-caption-control">
     <div class="bigscreen-control-headline">
       Caption Language
@@ -15,8 +15,7 @@
         </label>
       </li>
 
-      <% for (var i in captionsData) { %>
-        <% var track = captionsData[i] %>
+      <% for track in @captionsData: %>
         <li data-caption-language="<%= track.language %>">
           <label>
             <input type="radio"
@@ -26,7 +25,7 @@
             <span class="bigscreen-label-value"><%= track.title %></span>
           </label>
         </li>
-      <% } %>
+      <% end %>
     </ul>
   </div>
-<% } %>
+<% end %>
