@@ -1,6 +1,3 @@
-// Karma configuration
-// Generated on Sun Mar 23 2014 13:45:51 GMT-0700 (PDT)
-
 module.exports = function(config) {
   config.set({
     frameworks: ['jasmine'],
@@ -26,7 +23,8 @@ module.exports = function(config) {
     browsers: ['Chrome'],
     singleRun: false,
     sauceLabs: {
-      testName: 'bigscreen'
+      testName: 'bigscreen',
+      build:gg
     },
     customLaunchers: {
       sl_chrome: {
@@ -61,4 +59,8 @@ module.exports = function(config) {
       },
     }
   });
+
+  if (process.env.TRAVIS) {
+    config.sauceLabs.build = 'TRAVIS #' + process.env.TRAVIS_BUILD_NUMBER + ' (' + process.env.TRAVIS_BUILD_ID + ')';
+  }
 };
