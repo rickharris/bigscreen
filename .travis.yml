@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - '0.10'
+
+env:
+  global:
+  - secure: E3NZjgEWIIM94tIYF6HtUOVz0UpaBUiOtjOQqarF86C8nJSz2kdr22Vnrva2aR6Px500cItCMDxskQ/oxEp7ncDbxPTor6X/Jqn1kUUIfBBcQdq5/xx1CbGKZRH0FWanmI5dgi991LA3yWvDSDxi/0Mn0iSK/mN/IhwPQGma3e8=
+  - secure: UwC95zbvXw4SE+pVT8PqimabvtdGg26XTe1oX9PoXynFClu/OB7cGkH7JFKU+hv6yz0E6Fp/be3THhlAHq+FWhZZXeHJVRyA05xMCI5BPqxIUE3ZHBeAlBc3Hs5q9qXxjK1anzHeJzrBRcqYSYMFHS76IdwI3rBgMvAv8kJtZew=
+
+scripts:
+  test: "grunt karma:continuous"

@@ -91,10 +91,24 @@ module.exports = function(grunt) {
       }
     },
     karma: {
-      unit: {
+      options: {
         configFile: 'karma.conf.js',
         autoWatch: false,
+      },
+      unit: {
         background: true
+      },
+      continuous: {
+        autoWatch: false,
+        singleRun: true,
+        browsers: [
+          'sl_chrome',
+          'sl_firefox',
+          'sl_opera',
+          'sl_safari',
+          'sl_ie_10',
+          'sl_ie_11'
+        ]
       }
     }
   });
