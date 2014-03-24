@@ -63,6 +63,11 @@ Bigscreen.CaptionLayer = (function() {
   };
 
   CaptionLayer.prototype.processCaptionTrack = function(captionTrack) {
+    var href;
+    if (!(href = captionTrack.getAttribute('src'))) {
+      this.setActiveLanguage('error');
+      return;
+    }
     this.request = new XMLHttpRequest();
     this.request.open("GET", captionTrack.getAttribute('src'));
     this.request.onreadystatechange = (function(_this) {

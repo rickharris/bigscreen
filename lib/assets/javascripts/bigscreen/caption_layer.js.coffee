@@ -19,6 +19,10 @@ class Bigscreen.CaptionLayer
       @processCaptionTrack(captionTrack)
 
   processCaptionTrack: (captionTrack) ->
+    unless href = captionTrack.getAttribute('src')
+      @setActiveLanguage 'error'
+      return
+
     @request = new XMLHttpRequest()
     @request.open("GET", captionTrack.getAttribute('src'))
     @request.onreadystatechange = =>
