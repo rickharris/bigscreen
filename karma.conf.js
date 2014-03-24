@@ -23,8 +23,7 @@ module.exports = function(config) {
     browsers: ['Chrome'],
     singleRun: false,
     sauceLabs: {
-      testName: 'bigscreen',
-      build:gg
+      testName: 'bigscreen'
     },
     customLaunchers: {
       sl_chrome: {
