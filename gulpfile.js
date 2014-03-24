@@ -1,6 +1,6 @@
 var gulp     = require('gulp');
 var coffee   = require('gulp-coffee');
-// var template = require('gulp-template-compile');
+var eco      = require('gulp-eco');
 var concat   = require('gulp-concat');
 var gulpif   = require('gulp-if');
 var uglify   = require('gulp-uglify');
@@ -9,8 +9,6 @@ var rename   = require('gulp-rename');
 var csso     = require('gulp-csso');
 var http     = require('http');
 var ecstatic = require('ecstatic');
-var path     = require('path');
-var eco      = require('gulp-eco');
 
 var paths = {
   scripts: [
@@ -21,13 +19,6 @@ var paths = {
 };
 
 gulp.task('scripts', function() {
-  var templateName = function(file) {
-    var dir = path.dirname(file.relative)
-    var basename = path.basename(file.relative, ".jst.ejs");
-    var filename = path.join(dir, basename);
-    return filename;
-  }
-
   return gulp.src(paths.scripts)
     .pipe(gulpif(/[.]coffee$/, coffee({bare: true})))
     .pipe(gulpif(/[.]eco/, eco({basePath: 'lib/assets/javascripts'})))
