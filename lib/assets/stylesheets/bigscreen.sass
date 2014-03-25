@@ -14,13 +14,21 @@ $sprite: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPEAAAB5CAYAAADoKMe8A
 
 .bigscreen
   position: relative
-  padding-bottom: $control-height
   font-family: "Helvetica Nueue", Helvetica, Arial, sans-serif
+  padding-bottom: $control-height
 
+  &::before
+    content: ''
+    +inline-block
+    height: 100%
+    vertical-align: middle
+    margin-right: -0.25em
   video
+    +inline-block
     vertical-align: middle
     width: 100%
     height: auto
+    max-height: 100%
 
 .bigscreen-is-fullscreen
   position: fixed
@@ -32,11 +40,15 @@ $sprite: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPEAAAB5CAYAAADoKMe8A
     max-height: 100%
 
 .bigscreen-controls
-  position: relative
-  background: rgba($bg, .98)
+  +box-sizing(border-box)
+  width: 100%
+  position: absolute
   bottom: 0
+  background: rgba($bg, .98)
   height: $control-height
   +border-radius(0 0 5px 5px)
+  .bigscreen-is-fullscreen &
+    +border-radius(0)
   padding-left: $control-play-pause-width * 2
   padding-right: ($control-icon-width * 3) + $control-play-pause-width + $control-padding-right
 
@@ -205,7 +217,7 @@ $sprite: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPEAAAB5CAYAAADoKMe8A
 
 .bigscreen-caption-layer
   position: absolute
-  bottom: $control-height * 2
+  bottom: $control-height
   text-align: center
   width: 100%
 
