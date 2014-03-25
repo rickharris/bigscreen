@@ -3,7 +3,7 @@
 class Bigscreen.ProgressControl
   constructor: (@video) ->
     @video.addEventListener 'timeupdate', @onTimeUpdate
-    @video.addEventListener 'load', @setDuration
+    @video.addEventListener 'loadedmetadata', @setDuration
     Bigscreen.Utils.Events.delegate('click', @video.parentNode,
       '.bigscreen-progress-bar', @onClick)
     Bigscreen.Utils.Events.delegate('mouseover', @video.parentNode,
@@ -11,17 +11,13 @@ class Bigscreen.ProgressControl
     Bigscreen.Utils.Events.delegate('mouseout', @video.parentNode,
       '.bigscreen-progress-bar', @onMouseOut)
 
-    @durationSet = false
-
   onTimeUpdate: =>
-    @setDuration() unless @durationSet
     @updateCurrentTime()
     @updateProgressBar()
 
-  setDuration: ->
+  setDuration: =>
     durationLabel = @getElement('.bigscreen-duration-label')
     durationLabel.textContent = @secondsToTimeLabel(@video.duration)
-    @durationSet = true
 
   updateCurrentTime: ->
     currentTimeLabel =

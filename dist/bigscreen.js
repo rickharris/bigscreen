@@ -343,19 +343,16 @@ Bigscreen.ProgressControl = (function() {
     this.onMouseOut = __bind(this.onMouseOut, this);
     this.onMouseOver = __bind(this.onMouseOver, this);
     this.onClick = __bind(this.onClick, this);
+    this.setDuration = __bind(this.setDuration, this);
     this.onTimeUpdate = __bind(this.onTimeUpdate, this);
     this.video.addEventListener('timeupdate', this.onTimeUpdate);
-    this.video.addEventListener('load', this.setDuration);
+    this.video.addEventListener('loadedmetadata', this.setDuration);
     Bigscreen.Utils.Events.delegate('click', this.video.parentNode, '.bigscreen-progress-bar', this.onClick);
     Bigscreen.Utils.Events.delegate('mouseover', this.video.parentNode, '.bigscreen-progress-bar', this.onMouseOver);
     Bigscreen.Utils.Events.delegate('mouseout', this.video.parentNode, '.bigscreen-progress-bar', this.onMouseOut);
-    this.durationSet = false;
   }
 
   ProgressControl.prototype.onTimeUpdate = function() {
-    if (!this.durationSet) {
-      this.setDuration();
-    }
     this.updateCurrentTime();
     return this.updateProgressBar();
   };
@@ -363,8 +360,7 @@ Bigscreen.ProgressControl = (function() {
   ProgressControl.prototype.setDuration = function() {
     var durationLabel;
     durationLabel = this.getElement('.bigscreen-duration-label');
-    durationLabel.textContent = this.secondsToTimeLabel(this.video.duration);
-    return this.durationSet = true;
+    return durationLabel.textContent = this.secondsToTimeLabel(this.video.duration);
   };
 
   ProgressControl.prototype.updateCurrentTime = function() {
